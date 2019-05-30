@@ -14,6 +14,8 @@ class SearchListViewController: UIViewController, UISearchBarDelegate {
     var query: String = ""
     let searchBar = UISearchBar()
     var characterResults: [Character] = []
+    var actualPage = 0
+    var nextPage = 1
     var nextUrl = ""
     
     override func viewDidLoad() {
@@ -41,6 +43,9 @@ class SearchListViewController: UIViewController, UISearchBarDelegate {
                             self.nextUrl = ""
                         }
                         self.tableViewResults.reloadData()
+                        self.actualPage += 1
+                        self.nextPage += 1
+                        self.loadAdditionalItems()
                     }
                 },
                 failure: { (error) in print(error) }
@@ -57,7 +62,7 @@ class SearchListViewController: UIViewController, UISearchBarDelegate {
         navigationItem.titleView = searchBar
         searchBar.sizeToFit()
         searchBar.text = query
-        searchBar.placeholder = "Pesquisar..."
+        searchBar.placeholder = "Buscar Personagem..."
     }
     
     func searchBarSearchButtonClicked( _ searchBar: UISearchBar) {
@@ -80,6 +85,27 @@ class SearchListViewController: UIViewController, UISearchBarDelegate {
         return tap
     }
     
+    func loadAdditionalItems() {
+        if (self.nextUrl != "" && self.actualPage != self.nextPage) {
+            self.actualPage += 1
+            API.getCharactersByUrl(
+                url: nextUrl,
+                success: { (results) in
+                    if let finalResults = results.results {
+                        self.characterResults.append(contentsOf: finalResults)
+                    }
+                    if results.next != nil {
+                        self.nextUrl = results.next!
+                    } else {
+                        self.nextUrl = ""
+                    }
+                    self.tableViewResults.reloadData()
+                    self.nextPage += 1
+            },
+                failure: {(error) in print(error)})
+        }
+    }
+    
 }
 
 extension SearchListViewController: UITableViewDataSource, UITableViewDelegate {
@@ -96,33 +122,17 @@ extension SearchListViewController: UITableViewDataSource, UITableViewDelegate {
         cell.lblName.text = character.name
         cell.backgroundColor = UIColor.clear
         
-//        var bulk_no = characterResults.count
-        
-//        if (indexPath.row >= bulk_no - 3) {
-//            if (self.nextUrl != "") {
-//                API.getCharactersByUrl(
-//                    url: nextUrl,
-//                    success: { (results) in
-//                        if let count = results.count {
-//                            bulk_no += count
-//                        }
-////                        if let finalResults = results.results {
-////                            self.characterResults.append(contentsOf: finalResults)
-////                        }
-////                        if results.next != nil {
-////                            self.nextUrl = results.next!
-////                        } else {
-////                            self.nextUrl = ""
-////                        }
-//                        print(indexPath.row)
-//                        print(bulk_no)
-//                        self.tableViewResults.reloadData()
-//                },
-//                    failure: {(error) in print(error)})
-//            }
-//        }
-        
         return cell
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let height = scrollView.frame.size.height
+        let contentYoffset = scrollView.contentOffset.y
+        let distanceFromBottom = scrollView.contentSize.height - contentYoffset
+        
+        if distanceFromBottom < height {
+            self.loadAdditionalItems()
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
