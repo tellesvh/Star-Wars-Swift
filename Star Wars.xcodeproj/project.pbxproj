@@ -12,6 +12,9 @@
 		23AD077C229F46FB00B0AFA1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23AD077A229F46FB00B0AFA1 /* Main.storyboard */; };
 		23AD077E229F46FF00B0AFA1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23AD077D229F46FF00B0AFA1 /* Assets.xcassets */; };
 		23AD0781229F46FF00B0AFA1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23AD077F229F46FF00B0AFA1 /* LaunchScreen.storyboard */; };
+		23AD078B229F494600B0AFA1 /* stars.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 23AD078A229F494600B0AFA1 /* stars.jpg */; };
+		23AD078E229F4C2500B0AFA1 /* star-wars.png in Resources */ = {isa = PBXBuildFile; fileRef = 23AD078D229F4C2500B0AFA1 /* star-wars.png */; };
+		23AD0790229F5E9400B0AFA1 /* KeyboardUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23AD078F229F5E9400B0AFA1 /* KeyboardUtil.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +25,9 @@
 		23AD077D229F46FF00B0AFA1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		23AD0780229F46FF00B0AFA1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		23AD0782229F46FF00B0AFA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		23AD078A229F494600B0AFA1 /* stars.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = stars.jpg; sourceTree = "<group>"; };
+		23AD078D229F4C2500B0AFA1 /* star-wars.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star-wars.png"; sourceTree = "<group>"; };
+		23AD078F229F5E9400B0AFA1 /* KeyboardUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardUtil.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -40,6 +46,7 @@
 			children = (
 				23AD0775229F46FB00B0AFA1 /* Star Wars */,
 				23AD0774229F46FB00B0AFA1 /* Products */,
+				23AD078C229F49E300B0AFA1 /* src */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,6 +61,7 @@
 		23AD0775229F46FB00B0AFA1 /* Star Wars */ = {
 			isa = PBXGroup;
 			children = (
+				23AD0791229F60F100B0AFA1 /* util */,
 				23AD0776229F46FB00B0AFA1 /* AppDelegate.swift */,
 				23AD0778229F46FB00B0AFA1 /* ViewController.swift */,
 				23AD077A229F46FB00B0AFA1 /* Main.storyboard */,
@@ -62,6 +70,23 @@
 				23AD0782229F46FF00B0AFA1 /* Info.plist */,
 			);
 			path = "Star Wars";
+			sourceTree = "<group>";
+		};
+		23AD078C229F49E300B0AFA1 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				23AD078D229F4C2500B0AFA1 /* star-wars.png */,
+				23AD078A229F494600B0AFA1 /* stars.jpg */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		23AD0791229F60F100B0AFA1 /* util */ = {
+			isa = PBXGroup;
+			children = (
+				23AD078F229F5E9400B0AFA1 /* KeyboardUtil.swift */,
+			);
+			path = util;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -124,7 +149,9 @@
 			files = (
 				23AD0781229F46FF00B0AFA1 /* LaunchScreen.storyboard in Resources */,
 				23AD077E229F46FF00B0AFA1 /* Assets.xcassets in Resources */,
+				23AD078E229F4C2500B0AFA1 /* star-wars.png in Resources */,
 				23AD077C229F46FB00B0AFA1 /* Main.storyboard in Resources */,
+				23AD078B229F494600B0AFA1 /* stars.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,6 +164,7 @@
 			files = (
 				23AD0779229F46FB00B0AFA1 /* ViewController.swift in Sources */,
 				23AD0777229F46FB00B0AFA1 /* AppDelegate.swift in Sources */,
+				23AD0790229F5E9400B0AFA1 /* KeyboardUtil.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
