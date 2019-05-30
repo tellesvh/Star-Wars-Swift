@@ -19,6 +19,8 @@
 		23D5051422A00F8F00AAC9C0 /* SearchListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D5051322A00F8F00AAC9C0 /* SearchListViewController.swift */; };
 		23D5052322A0522000AAC9C0 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D5052222A0522000AAC9C0 /* API.swift */; };
 		23D5052622A0527200AAC9C0 /* CharactersResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D5052522A0527200AAC9C0 /* CharactersResults.swift */; };
+		23D5052A22A05C1200AAC9C0 /* ResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D5052822A05C1200AAC9C0 /* ResultTableViewCell.swift */; };
+		23D5052B22A05C1200AAC9C0 /* ResultTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23D5052922A05C1200AAC9C0 /* ResultTableViewCell.xib */; };
 		41C7E50EFD89528EDA66A52C /* Pods_Star_Wars.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 099D4B9A17C18FD0CABFA26E /* Pods_Star_Wars.framework */; };
 /* End PBXBuildFile section */
 
@@ -38,6 +40,8 @@
 		23D5051322A00F8F00AAC9C0 /* SearchListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListViewController.swift; sourceTree = "<group>"; };
 		23D5052222A0522000AAC9C0 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		23D5052522A0527200AAC9C0 /* CharactersResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersResults.swift; sourceTree = "<group>"; };
+		23D5052822A05C1200AAC9C0 /* ResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultTableViewCell.swift; sourceTree = "<group>"; };
+		23D5052922A05C1200AAC9C0 /* ResultTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResultTableViewCell.xib; sourceTree = "<group>"; };
 		AE665DCDCDA3429DECFC3691 /* Pods-Star Wars.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Star Wars.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Star Wars/Pods-Star Wars.debug.xcconfig"; sourceTree = "<group>"; };
 		FAD26F9249775ABBE45205D2 /* Pods-Star Wars.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Star Wars.release.xcconfig"; path = "Pods/Target Support Files/Pods-Star Wars/Pods-Star Wars.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -75,11 +79,11 @@
 		23AD0775229F46FB00B0AFA1 /* Star Wars */ = {
 			isa = PBXGroup;
 			children = (
-				23D5052422A0526300AAC9C0 /* models */,
-				23D5051F22A0520100AAC9C0 /* webservice */,
-				23AD078C229F49E300B0AFA1 /* src */,
-				23D5051222A00F4700AAC9C0 /* view-controllers */,
-				23AD0791229F60F100B0AFA1 /* util */,
+				23D5052422A0526300AAC9C0 /* Models */,
+				23D5051F22A0520100AAC9C0 /* Webservice */,
+				23AD078C229F49E300B0AFA1 /* Src */,
+				23D5051222A00F4700AAC9C0 /* ViewControllers */,
+				23AD0791229F60F100B0AFA1 /* Util */,
 				23AD0776229F46FB00B0AFA1 /* AppDelegate.swift */,
 				23AD077A229F46FB00B0AFA1 /* Main.storyboard */,
 				23AD077D229F46FF00B0AFA1 /* Assets.xcassets */,
@@ -89,47 +93,57 @@
 			path = "Star Wars";
 			sourceTree = "<group>";
 		};
-		23AD078C229F49E300B0AFA1 /* src */ = {
+		23AD078C229F49E300B0AFA1 /* Src */ = {
 			isa = PBXGroup;
 			children = (
 				23AD078D229F4C2500B0AFA1 /* star-wars.png */,
 				23AD078A229F494600B0AFA1 /* stars.jpg */,
 			);
-			path = src;
+			path = Src;
 			sourceTree = "<group>";
 		};
-		23AD0791229F60F100B0AFA1 /* util */ = {
+		23AD0791229F60F100B0AFA1 /* Util */ = {
 			isa = PBXGroup;
 			children = (
 				23AD078F229F5E9400B0AFA1 /* KeyboardUtil.swift */,
 				2316124A229FFEAA00C3F48E /* Toast.swift */,
 			);
-			path = util;
+			path = Util;
 			sourceTree = "<group>";
 		};
-		23D5051222A00F4700AAC9C0 /* view-controllers */ = {
+		23D5051222A00F4700AAC9C0 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				23D5052722A05BC900AAC9C0 /* SearchList */,
 				23AD0778229F46FB00B0AFA1 /* MainViewController.swift */,
-				23D5051322A00F8F00AAC9C0 /* SearchListViewController.swift */,
 			);
-			path = "view-controllers";
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
-		23D5051F22A0520100AAC9C0 /* webservice */ = {
+		23D5051F22A0520100AAC9C0 /* Webservice */ = {
 			isa = PBXGroup;
 			children = (
 				23D5052222A0522000AAC9C0 /* API.swift */,
 			);
-			path = webservice;
+			path = Webservice;
 			sourceTree = "<group>";
 		};
-		23D5052422A0526300AAC9C0 /* models */ = {
+		23D5052422A0526300AAC9C0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				23D5052522A0527200AAC9C0 /* CharactersResults.swift */,
 			);
-			path = models;
+			path = Models;
+			sourceTree = "<group>";
+		};
+		23D5052722A05BC900AAC9C0 /* SearchList */ = {
+			isa = PBXGroup;
+			children = (
+				23D5051322A00F8F00AAC9C0 /* SearchListViewController.swift */,
+				23D5052822A05C1200AAC9C0 /* ResultTableViewCell.swift */,
+				23D5052922A05C1200AAC9C0 /* ResultTableViewCell.xib */,
+			);
+			path = SearchList;
 			sourceTree = "<group>";
 		};
 		C622525ADCF49FB66832002A /* Frameworks */ = {
@@ -211,6 +225,7 @@
 			files = (
 				23AD0781229F46FF00B0AFA1 /* LaunchScreen.storyboard in Resources */,
 				23AD077E229F46FF00B0AFA1 /* Assets.xcassets in Resources */,
+				23D5052B22A05C1200AAC9C0 /* ResultTableViewCell.xib in Resources */,
 				23AD078E229F4C2500B0AFA1 /* star-wars.png in Resources */,
 				23AD077C229F46FB00B0AFA1 /* Main.storyboard in Resources */,
 				23AD078B229F494600B0AFA1 /* stars.jpg in Resources */,
@@ -277,6 +292,7 @@
 				23D5051422A00F8F00AAC9C0 /* SearchListViewController.swift in Sources */,
 				23AD0777229F46FB00B0AFA1 /* AppDelegate.swift in Sources */,
 				23D5052322A0522000AAC9C0 /* API.swift in Sources */,
+				23D5052A22A05C1200AAC9C0 /* ResultTableViewCell.swift in Sources */,
 				23AD0790229F5E9400B0AFA1 /* KeyboardUtil.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
