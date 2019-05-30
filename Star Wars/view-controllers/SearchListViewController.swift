@@ -12,11 +12,27 @@ class SearchListViewController: UIViewController, UISearchBarDelegate {
     
     var query: String = ""
     let searchBar = UISearchBar()
+    var characterResults: [Character] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureSearchAndNavigationBar()
         setupHideKeyboardOnTapForSearchList()
+        getCharactersByQuery()
+    }
+    
+    func getCharactersByQuery() {
+        if let query = searchBar.text {
+            API.getCharactersByQuery(
+                query: query,
+                success:{ (results) in
+                    if let finalResults = results.results {
+                        self.characterResults = finalResults
+                    }
+                },
+                failure: { (error) in print(error) }
+            )
+        }
     }
     
     func configureSearchAndNavigationBar() {
