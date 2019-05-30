@@ -8,17 +8,26 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UISearchBarDelegate {
 
     @IBOutlet weak var searchBarMain: UISearchBar!
     @IBOutlet weak var viewLogoSearchBar: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        clearSearchBarBackgroundColor()
-        viewLogoSearchBar.bindToKeyboard()
-        
+        setupSearchBarColors()
         setupHideKeyboardOnTap()
+        viewLogoSearchBar.bindToKeyboard()
+        self.searchBarMain.delegate = self
+    }
+    
+    func searchBarSearchButtonClicked( _ searchBar: UISearchBar) {
+        if (!searchBar.text!.isEmpty) {
+//            print(searchBar.text!)
+            // Enviar texto da busca para próxima página e listar requests
+        } else {
+            showToast(message: "A busca não pode estar vazia.")
+        }
     }
     
     func setupHideKeyboardOnTap() {
@@ -26,7 +35,6 @@ class ViewController: UIViewController {
         self.navigationController?.navigationBar.addGestureRecognizer(self.endEditingRecognizer())
     }
     
-    /// Dismisses the keyboard from self.view
     private func endEditingRecognizer() -> UIGestureRecognizer {
         let tap = UITapGestureRecognizer(target: self.view, action: #selector(self.view.endEditing(_:)))
         tap.cancelsTouchesInView = false
@@ -37,7 +45,7 @@ class ViewController: UIViewController {
         viewLogoSearchBar.unbindFromKeyboard()
     }
     
-    private func clearSearchBarBackgroundColor() {
+    private func setupSearchBarColors() {
         searchBarMain.barTintColor = UIColor.clear
         searchBarMain.backgroundColor = UIColor.clear
         searchBarMain.isTranslucent = true
