@@ -25,6 +25,8 @@ class MainViewController: UIViewController, UISearchBarDelegate {
         super.viewWillAppear(animated)
         
         self.navigationController?.setNavigationBarHidden(true, animated: true)
+        
+        self.viewLogoSearchBar.center = self.view.center
     }
     
     override func viewDidAppear(_ animated: Bool) {

@@ -23,11 +23,17 @@ class SearchListViewController: UIViewController, UISearchBarDelegate {
         configureSearchAndNavigationBar()
         setupHideKeyboardOnTapForSearchList()
         
+        self.showProgressAlert()
         getCharactersByQuery()
+        
         self.tableViewResults.register(UINib.init(nibName: "ResultTableViewCell", bundle: nil), forCellReuseIdentifier: "DEFAULT_TABLEVIEW_CELL_ID")
         self.tableViewResults.separatorColor = UIColor(
             red: 255, green: 255, blue: 255, alpha: 0.3
         )
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        searchBar.endEditing(true)
     }
     
     func getCharactersByQuery() {
@@ -46,6 +52,7 @@ class SearchListViewController: UIViewController, UISearchBarDelegate {
                         self.actualPage += 1
                         self.nextPage += 1
                         self.loadAdditionalItems()
+                        self.hideProgressAlert()
                     }
                 },
                 failure: { (error) in print(error) }
@@ -87,6 +94,7 @@ class SearchListViewController: UIViewController, UISearchBarDelegate {
     
     func loadAdditionalItems() {
         if (self.nextUrl != "" && self.actualPage != self.nextPage) {
+            self.showProgressAlert()
             self.actualPage += 1
             API.getCharactersByUrl(
                 url: nextUrl,
@@ -101,6 +109,7 @@ class SearchListViewController: UIViewController, UISearchBarDelegate {
                     }
                     self.tableViewResults.reloadData()
                     self.nextPage += 1
+                    self.hideProgressAlert()
             },
                 failure: {(error) in print(error)})
         }
@@ -133,6 +142,8 @@ extension SearchListViewController: UITableViewDataSource, UITableViewDelegate {
         if distanceFromBottom < height {
             self.loadAdditionalItems()
         }
+        
+        searchBar.endEditing(true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
