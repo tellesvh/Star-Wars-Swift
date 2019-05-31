@@ -17,6 +17,7 @@ class SearchListViewController: UIViewController, UISearchBarDelegate {
     var actualPage = 0
     var nextPage = 1
     var nextUrl = ""
+    var itemClicked: Character?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -132,6 +133,19 @@ extension SearchListViewController: UITableViewDataSource, UITableViewDelegate {
         cell.backgroundColor = UIColor.clear
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.itemClicked = characterResults[indexPath.row]
+        performSegue(withIdentifier: "ResultsToDetail", sender: self)
+        tableView.deselectRow(at: indexPath as IndexPath, animated: true)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ResultsToDetail" {
+            let vc = segue.destination as! DetailsViewController
+            vc.character = self.itemClicked
+        }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

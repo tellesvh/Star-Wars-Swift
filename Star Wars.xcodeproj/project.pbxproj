@@ -22,6 +22,7 @@
 		23D5052A22A05C1200AAC9C0 /* ResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D5052822A05C1200AAC9C0 /* ResultTableViewCell.swift */; };
 		23D5052B22A05C1200AAC9C0 /* ResultTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23D5052922A05C1200AAC9C0 /* ResultTableViewCell.xib */; };
 		23D5052D22A0A48500AAC9C0 /* ProgressAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D5052C22A0A48500AAC9C0 /* ProgressAlert.swift */; };
+		23D5053222A0B28B00AAC9C0 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D5053122A0B28B00AAC9C0 /* DetailsViewController.swift */; };
 		41C7E50EFD89528EDA66A52C /* Pods_Star_Wars.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 099D4B9A17C18FD0CABFA26E /* Pods_Star_Wars.framework */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +45,7 @@
 		23D5052822A05C1200AAC9C0 /* ResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultTableViewCell.swift; sourceTree = "<group>"; };
 		23D5052922A05C1200AAC9C0 /* ResultTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResultTableViewCell.xib; sourceTree = "<group>"; };
 		23D5052C22A0A48500AAC9C0 /* ProgressAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressAlert.swift; sourceTree = "<group>"; };
+		23D5053122A0B28B00AAC9C0 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		AE665DCDCDA3429DECFC3691 /* Pods-Star Wars.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Star Wars.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Star Wars/Pods-Star Wars.debug.xcconfig"; sourceTree = "<group>"; };
 		FAD26F9249775ABBE45205D2 /* Pods-Star Wars.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Star Wars.release.xcconfig"; path = "Pods/Target Support Files/Pods-Star Wars/Pods-Star Wars.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -117,6 +119,7 @@
 		23D5051222A00F4700AAC9C0 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				23D5053022A0B01000AAC9C0 /* Details */,
 				23D5052722A05BC900AAC9C0 /* SearchList */,
 				23AD0778229F46FB00B0AFA1 /* MainViewController.swift */,
 			);
@@ -147,6 +150,14 @@
 				23D5052922A05C1200AAC9C0 /* ResultTableViewCell.xib */,
 			);
 			path = SearchList;
+			sourceTree = "<group>";
+		};
+		23D5053022A0B01000AAC9C0 /* Details */ = {
+			isa = PBXGroup;
+			children = (
+				23D5053122A0B28B00AAC9C0 /* DetailsViewController.swift */,
+			);
+			path = Details;
 			sourceTree = "<group>";
 		};
 		C622525ADCF49FB66832002A /* Frameworks */ = {
@@ -289,6 +300,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23D5053222A0B28B00AAC9C0 /* DetailsViewController.swift in Sources */,
 				23D5052622A0527200AAC9C0 /* CharactersResults.swift in Sources */,
 				23AD0779229F46FB00B0AFA1 /* MainViewController.swift in Sources */,
 				23D5052D22A0A48500AAC9C0 /* ProgressAlert.swift in Sources */,
