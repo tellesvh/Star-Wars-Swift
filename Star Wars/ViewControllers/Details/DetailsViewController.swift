@@ -12,6 +12,10 @@ class DetailsViewController: UIViewController {
     
     @IBOutlet weak var tableViewDetails: UITableView!
     var character: Character?
+    var films: [Film] = []
+//    var species: [Species] = []
+//    var vehicles: [Vehicle] = []
+//    var starships: [Starships] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +25,7 @@ class DetailsViewController: UIViewController {
         ]
         navigationItem.title = character!.name
         
+        self.tableViewDetails.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
         self.tableViewDetails.register(UINib.init(nibName: "DetailTableViewCell", bundle: nil), forCellReuseIdentifier: "DEFAULT_TABLEVIEWDETAILS_CELL_ID")
     }
     
@@ -70,28 +75,83 @@ extension DetailsViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.lblValue.text = self.character!.gender!.capitalized
             case 7:
                 cell.lblType.text = "Homeworld"
-                cell.lblValue.text = self.character?.homeworld
+                cell.lblValue.isHidden = true
                 if (self.character!.homeworld!.contains("https://")) {
                     cell.activityIndicator.isHidden = false
                     cell.lblType.isHidden = true
-                    cell.lblValue.isHidden = true
                     
                     API.getHomeworldInfo(
                         url: self.character!.homeworld!,
                         success: { (homeworld) in
+                            cell.arrayType = 0
                             self.character?.homeworld = homeworld.name
-                            cell.lblValue.text = homeworld.name
+                            
+                            cell.stringArray = [homeworld.name!.capitalized]
+                            
+                            if (homeworld.name!.elementsEqual("unknown")) {
+                                cell.bgColorForCollectionViewCell = UIColor.black
+                            } else {
+                                cell.bgColorForCollectionViewCell = UIColor(red: 0, green: 140/255, blue: 25/255, alpha: 1)
+                            }
+                            cell.bgColorForCollectionViewCellLabel = UIColor.white
+                            
                             cell.activityIndicator.isHidden = true
+                            
                             cell.lblType.isHidden = false
-                            cell.lblValue.isHidden = false
+                            cell.collectionView.isHidden = false
+                            
+                            cell.collectionView.reloadData()
                             tableView.reloadData()
                     },
                         failure: { (error) in print(error)})
                 }
             case 8:
                 if (self.character!.films!.count > 0) {
+                    cell.arrayType = 1
                     cell.lblType.text = "Films"
-                    cell.lblValue.text = "COLLECTION"
+//                    cell.lblType.isHidden = true
+                    cell.lblValue.isHidden = true
+                    
+                    if (self.films.count == 0) {
+                        cell.activityIndicator.isHidden = false
+                        let group = DispatchGroup()
+                        
+                        for filmUrl in self.character!.films! {
+                            group.enter()
+                            API.getFilmInfo(
+                                url: filmUrl,
+                                success: { (film) in
+                                    self.films.append(film)
+                                group.leave()
+                            },
+                                failure: { (error) in print(error)})
+                        }
+                        
+                        group.notify(queue: .main) {
+                            var filmsString: [String] = []
+                            cell.activityIndicator.isHidden = true
+                            
+                            for film in self.films {
+                                if let title = film.title {
+                                    if (!filmsString.contains(title)) {
+                                        filmsString.append(title)
+                                    }
+                                }
+                            }
+                            
+                            print(filmsString)
+                            
+                            cell.stringArray = filmsString
+                            cell.bgColorForCollectionViewCell = UIColor.brown
+                            cell.bgColorForCollectionViewCellLabel = UIColor.white
+                            
+                            cell.lblType.isHidden = false
+                            cell.collectionView.isHidden = false
+                            
+                            cell.collectionView.reloadData()
+                            tableView.reloadData()
+                        }
+                    }
                 } else {
                     cell.lblType.text = "Films"
                     cell.lblValue.text = "N/A"

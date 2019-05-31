@@ -46,7 +46,7 @@ class MainViewController: UIViewController, UISearchBarDelegate {
             self.view.endEditing(true)
             performSegue(withIdentifier: "MainToResults", sender: self)
         } else {
-            showToast(message: "A busca não pode estar vazia.")
+            showToast(message: "The search can not be empty.")
         }
     }
     
