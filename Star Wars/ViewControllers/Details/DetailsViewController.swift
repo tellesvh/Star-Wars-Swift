@@ -13,7 +13,7 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var tableViewDetails: UITableView!
     var character: Character?
     var films: [Film] = []
-//    var species: [Species] = []
+    var species: [Species] = []
 //    var vehicles: [Vehicle] = []
 //    var starships: [Starships] = []
     
@@ -24,6 +24,7 @@ class DetailsViewController: UIViewController {
             NSAttributedString.Key.foregroundColor: UIColor.white
         ]
         navigationItem.title = character!.name
+        self.navigationController?.navigationBar.topItem?.title = "Back";
         
         self.tableViewDetails.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
         self.tableViewDetails.register(UINib.init(nibName: "DetailTableViewCell", bundle: nil), forCellReuseIdentifier: "DEFAULT_TABLEVIEWDETAILS_CELL_ID")
@@ -54,10 +55,18 @@ extension DetailsViewController: UITableViewDataSource, UITableViewDelegate {
         switch indexPath.row {
             case 0:
                 cell.lblType.text = "Height"
-                cell.lblValue.text = "\(Measurement(value: Double(self.character!.height!) as! Double, unit: UnitLength.centimeters).converted(to: UnitLength.meters))"
+                if (Double(self.character!.height!) != nil)  {
+                    cell.lblValue.text = "\(Measurement(value: Double(self.character!.height!) as! Double, unit: UnitLength.centimeters).converted(to: UnitLength.meters))"
+                } else {
+                    cell.lblValue.text = self.character!.height!.capitalized
+                }
             case 1:
                 cell.lblType.text = "Mass"
-                cell.lblValue.text = self.character!.mass! + " kg"
+                if (Double(self.character!.mass!) != nil) {
+                    cell.lblValue.text = self.character!.mass! + " kg"
+                } else {
+                    cell.lblValue.text = self.character!.mass!.capitalized
+                }
             case 2:
                 cell.lblType.text = "Hair Color"
                 cell.lblValue.text = self.character!.hair_color!.capitalized
@@ -69,16 +78,17 @@ extension DetailsViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.lblValue.text = self.character!.eye_color!.capitalized
             case 5:
                 cell.lblType.text = "Birth Year"
-                cell.lblValue.text = self.character!.birth_year
+                cell.lblValue.text = self.character!.birth_year?.capitalized
             case 6:
                 cell.lblType.text = "Gender"
                 cell.lblValue.text = self.character!.gender!.capitalized
             case 7:
                 cell.lblType.text = "Homeworld"
-                cell.lblValue.isHidden = true
+//                cell.lblValue.isHidden = true
                 if (self.character!.homeworld!.contains("https://")) {
                     cell.activityIndicator.isHidden = false
                     cell.lblType.isHidden = true
+                    cell.lblValue.isHidden = true
                     
                     API.getHomeworldInfo(
                         url: self.character!.homeworld!,
@@ -158,8 +168,51 @@ extension DetailsViewController: UITableViewDataSource, UITableViewDelegate {
                 }
             case 9:
                 if (self.character!.species!.count > 0) {
+                    cell.arrayType = 2
                     cell.lblType.text = "Species"
-                    cell.lblValue.text = "COLLECTION"
+//                    cell.lblType.isHidden = true
+                    cell.lblValue.isHidden = true
+                    
+                    if (self.species.count == 0) {
+                        cell.activityIndicator.isHidden = false
+                        let group = DispatchGroup()
+                        
+                        for speciesUrl in self.character!.species! {
+                            group.enter()
+                            API.getSpeciesInfo(
+                                url: speciesUrl,
+                                success: { (species) in
+                                    self.species.append(species)
+                                    group.leave()
+                            },
+                                failure: { (error) in print(error)})
+                        }
+                        
+                        group.notify(queue: .main) {
+                            var speciesString: [String] = []
+                            cell.activityIndicator.isHidden = true
+                            
+                            for species in self.species {
+                                if let name = species.name {
+                                    if (!speciesString.contains(name)) {
+                                        speciesString.append(name)
+                                    }
+                                }
+                            }
+                            
+                            print(speciesString)
+                            
+                            cell.stringArray = speciesString
+                            cell.bgColorForCollectionViewCell = UIColor.purple
+                            cell.bgColorForCollectionViewCellLabel = UIColor.white
+                            
+                            cell.lblType.isHidden = false
+                            cell.collectionView.isHidden = false
+                            
+                            cell.collectionView.reloadData()
+                            tableView.reloadData()
+                        }
+                    }
                 } else {
                     cell.lblType.text = "Species"
                     cell.lblValue.text = "N/A"

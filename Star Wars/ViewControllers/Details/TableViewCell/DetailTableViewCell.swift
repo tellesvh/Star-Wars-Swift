@@ -44,7 +44,7 @@ class DetailTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollecti
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath)
         print(collectionView)
-        print(type)
+        print(self.arrayType)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -62,7 +62,7 @@ class DetailTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollecti
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         let size: CGSize = stringArray[indexPath.row].size(withAttributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 24.0)])
         print(size)
-        return CGSize(width: size.width + 40, height: 30)
+        return CGSize(width: size.width + 44, height: 30)
     }
     
 }
