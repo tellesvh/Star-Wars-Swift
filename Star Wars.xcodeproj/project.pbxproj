@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2316124B229FFEAA00C3F48E /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2316124A229FFEAA00C3F48E /* Toast.swift */; };
+		23205D4922A1301F00D2F206 /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23205D4722A1301F00D2F206 /* DetailTableViewCell.swift */; };
+		23205D4A22A1301F00D2F206 /* DetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23205D4822A1301F00D2F206 /* DetailTableViewCell.xib */; };
 		23AD0777229F46FB00B0AFA1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23AD0776229F46FB00B0AFA1 /* AppDelegate.swift */; };
 		23AD0779229F46FB00B0AFA1 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23AD0778229F46FB00B0AFA1 /* MainViewController.swift */; };
 		23AD077C229F46FB00B0AFA1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23AD077A229F46FB00B0AFA1 /* Main.storyboard */; };
@@ -29,6 +31,8 @@
 /* Begin PBXFileReference section */
 		099D4B9A17C18FD0CABFA26E /* Pods_Star_Wars.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Star_Wars.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2316124A229FFEAA00C3F48E /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
+		23205D4722A1301F00D2F206 /* DetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableViewCell.swift; sourceTree = "<group>"; };
+		23205D4822A1301F00D2F206 /* DetailTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailTableViewCell.xib; sourceTree = "<group>"; };
 		23AD0773229F46FB00B0AFA1 /* Star Wars.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Star Wars.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		23AD0776229F46FB00B0AFA1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		23AD0778229F46FB00B0AFA1 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -156,6 +160,8 @@
 			isa = PBXGroup;
 			children = (
 				23D5053122A0B28B00AAC9C0 /* DetailsViewController.swift */,
+				23205D4722A1301F00D2F206 /* DetailTableViewCell.swift */,
+				23205D4822A1301F00D2F206 /* DetailTableViewCell.xib */,
 			);
 			path = Details;
 			sourceTree = "<group>";
@@ -242,6 +248,7 @@
 				23D5052B22A05C1200AAC9C0 /* ResultTableViewCell.xib in Resources */,
 				23AD078E229F4C2500B0AFA1 /* star-wars.png in Resources */,
 				23AD077C229F46FB00B0AFA1 /* Main.storyboard in Resources */,
+				23205D4A22A1301F00D2F206 /* DetailTableViewCell.xib in Resources */,
 				23AD078B229F494600B0AFA1 /* stars.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -310,6 +317,7 @@
 				23D5052322A0522000AAC9C0 /* API.swift in Sources */,
 				23D5052A22A05C1200AAC9C0 /* ResultTableViewCell.swift in Sources */,
 				23AD0790229F5E9400B0AFA1 /* KeyboardUtil.swift in Sources */,
+				23205D4922A1301F00D2F206 /* DetailTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

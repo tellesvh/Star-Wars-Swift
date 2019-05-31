@@ -18,10 +18,10 @@ class CharactersResults: Codable {
 
 // MARK: - Result
 class Character: Codable {
-    let name, height, mass, hairColor: String?
-    let skinColor: String?
-    let eyeColor: String?
-    let birthYear: String?
+    let name, height, mass, hair_color: String?
+    let skin_color: String?
+    let eye_color: String?
+    let birth_year: String?
     let gender: String?
     let homeworld: String?
     let films, species, vehicles, starships: [String]?
@@ -30,21 +30,21 @@ class Character: Codable {
     
     enum CodingKeys: String, CodingKey {
         case name, height, mass
-        case hairColor
-        case skinColor
-        case eyeColor
-        case birthYear
+        case hair_color
+        case skin_color
+        case eye_color
+        case birth_year
         case gender, homeworld, films, species, vehicles, starships, created, edited, url
     }
     
-    init(name: String?, height: String?, mass: String?, hairColor: String?, skinColor: String?, eyeColor: String?, birthYear: String?, gender: String?, homeworld: String?, films: [String]?, species: [String]?, vehicles: [String]?, starships: [String]?, created: String?, edited: String?, url: String?) {
+    init(name: String?, height: String?, mass: String?, hair_color: String?, skin_color: String?, eye_color: String?, birth_year: String?, gender: String?, homeworld: String?, films: [String]?, species: [String]?, vehicles: [String]?, starships: [String]?, created: String?, edited: String?, url: String?) {
         self.name = name
         self.height = height
         self.mass = mass
-        self.hairColor = hairColor
-        self.skinColor = skinColor
-        self.eyeColor = eyeColor
-        self.birthYear = birthYear
+        self.hair_color = hair_color
+        self.skin_color = skin_color
+        self.eye_color = eye_color
+        self.birth_year = birth_year
         self.gender = gender
         self.homeworld = homeworld
         self.films = films

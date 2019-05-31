@@ -70,7 +70,7 @@ class SearchListViewController: UIViewController, UISearchBarDelegate {
         navigationItem.titleView = searchBar
         searchBar.sizeToFit()
         searchBar.text = query
-        searchBar.placeholder = "Buscar Personagem..."
+        searchBar.placeholder = "Search Character..."
     }
     
     func searchBarSearchButtonClicked( _ searchBar: UISearchBar) {
@@ -125,7 +125,7 @@ extension SearchListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(withIdentifier: "DEFAULT_TABLEVIEW_CELL_ID") as! ResultTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "DEFAULT_TABLEVIEW_CELL_ID") as! ResultTableViewCell
         
         let character: Character = characterResults[indexPath.row]
             
