@@ -23,7 +23,7 @@ class Character: Codable {
     let eye_color: String?
     let birth_year: String?
     let gender: String?
-    let homeworld: String?
+    var homeworld: String?
     let films, species, vehicles, starships: [String]?
     let created, edited: String?
     let url: String?

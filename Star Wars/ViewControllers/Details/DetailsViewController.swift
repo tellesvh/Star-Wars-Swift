@@ -71,18 +71,55 @@ extension DetailsViewController: UITableViewDataSource, UITableViewDelegate {
             case 7:
                 cell.lblType.text = "Homeworld"
                 cell.lblValue.text = self.character?.homeworld
+                if (self.character!.homeworld!.contains("https://")) {
+                    cell.activityIndicator.isHidden = false
+                    cell.lblType.isHidden = true
+                    cell.lblValue.isHidden = true
+                    
+                    API.getHomeworldInfo(
+                        url: self.character!.homeworld!,
+                        success: { (homeworld) in
+                            self.character?.homeworld = homeworld.name
+                            cell.lblValue.text = homeworld.name
+                            cell.activityIndicator.isHidden = true
+                            cell.lblType.isHidden = false
+                            cell.lblValue.isHidden = false
+                            tableView.reloadData()
+                    },
+                        failure: { (error) in print(error)})
+                }
             case 8:
-                cell.lblType.text = "Films"
-                cell.lblValue.text = "COLLECTION"
+                if (self.character!.films!.count > 0) {
+                    cell.lblType.text = "Films"
+                    cell.lblValue.text = "COLLECTION"
+                } else {
+                    cell.lblType.text = "Films"
+                    cell.lblValue.text = "N/A"
+                }
             case 9:
-                cell.lblType.text = "Species"
-                cell.lblValue.text = "COLLECTION"
+                if (self.character!.species!.count > 0) {
+                    cell.lblType.text = "Species"
+                    cell.lblValue.text = "COLLECTION"
+                } else {
+                    cell.lblType.text = "Species"
+                    cell.lblValue.text = "N/A"
+                }
             case 10:
-                cell.lblType.text = "Vehicles"
-                cell.lblValue.text = "COLLECTION"
+                if (self.character!.vehicles!.count > 0) {
+                    cell.lblType.text = "Vehicles"
+                    cell.lblValue.text = "COLLECTION"
+                } else {
+                    cell.lblType.text = "Vehicles"
+                    cell.lblValue.text = "N/A"
+                }
             case 11:
-                cell.lblType.text = "Starships"
-                cell.lblValue.text = "COLLECTION"
+                if (self.character!.starships!.count > 0) {
+                    cell.lblType.text = "Starships"
+                    cell.lblValue.text = "COLLECTION"
+                } else {
+                    cell.lblType.text = "Starships"
+                    cell.lblValue.text = "N/A"
+                }
             default:
                 cell.lblType.text = ""
                 cell.lblValue.text = ""

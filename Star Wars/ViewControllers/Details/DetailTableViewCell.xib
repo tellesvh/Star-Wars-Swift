@@ -31,6 +31,9 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="fEI-8R-6Ok">
+                        <rect key="frame" x="150" y="17.5" width="20" height="20"/>
+                    </activityIndicatorView>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
@@ -38,6 +41,8 @@
                     <constraint firstItem="B9b-M3-ZV6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="HGq-cP-0rK"/>
                     <constraint firstAttribute="bottom" secondItem="B9b-M3-ZV6" secondAttribute="bottom" constant="5" id="KML-1q-cfM"/>
                     <constraint firstAttribute="trailing" secondItem="B9b-M3-ZV6" secondAttribute="trailing" constant="16" id="Usk-4p-rRE"/>
+                    <constraint firstItem="fEI-8R-6Ok" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="Vst-Hi-oC5"/>
+                    <constraint firstItem="fEI-8R-6Ok" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="WfV-ab-H45"/>
                     <constraint firstItem="1t5-nt-Bbv" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="ZBb-pN-ejp"/>
                     <constraint firstItem="B9b-M3-ZV6" firstAttribute="top" secondItem="1t5-nt-Bbv" secondAttribute="bottom" id="q4d-12-Bx1"/>
                     <constraint firstItem="1t5-nt-Bbv" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="qDO-7T-eCY"/>
@@ -46,6 +51,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="activityIndicator" destination="fEI-8R-6Ok" id="XLb-Rt-Pks"/>
                 <outlet property="lblType" destination="1t5-nt-Bbv" id="9TW-eM-9Fa"/>
                 <outlet property="lblValue" destination="B9b-M3-ZV6" id="WPC-c1-0NF"/>
             </connections>

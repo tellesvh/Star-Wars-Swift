@@ -12,6 +12,7 @@ class DetailTableViewCell: UITableViewCell {
     
     @IBOutlet weak var lblType: UILabel!
     @IBOutlet weak var lblValue: UILabel!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

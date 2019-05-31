@@ -10,6 +10,7 @@
 		2316124B229FFEAA00C3F48E /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2316124A229FFEAA00C3F48E /* Toast.swift */; };
 		23205D4922A1301F00D2F206 /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23205D4722A1301F00D2F206 /* DetailTableViewCell.swift */; };
 		23205D4A22A1301F00D2F206 /* DetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23205D4822A1301F00D2F206 /* DetailTableViewCell.xib */; };
+		23205D4C22A1AA0700D2F206 /* Homeworld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23205D4B22A1AA0700D2F206 /* Homeworld.swift */; };
 		23AD0777229F46FB00B0AFA1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23AD0776229F46FB00B0AFA1 /* AppDelegate.swift */; };
 		23AD0779229F46FB00B0AFA1 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23AD0778229F46FB00B0AFA1 /* MainViewController.swift */; };
 		23AD077C229F46FB00B0AFA1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23AD077A229F46FB00B0AFA1 /* Main.storyboard */; };
@@ -33,6 +34,7 @@
 		2316124A229FFEAA00C3F48E /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		23205D4722A1301F00D2F206 /* DetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableViewCell.swift; sourceTree = "<group>"; };
 		23205D4822A1301F00D2F206 /* DetailTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailTableViewCell.xib; sourceTree = "<group>"; };
+		23205D4B22A1AA0700D2F206 /* Homeworld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Homeworld.swift; sourceTree = "<group>"; };
 		23AD0773229F46FB00B0AFA1 /* Star Wars.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Star Wars.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		23AD0776229F46FB00B0AFA1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		23AD0778229F46FB00B0AFA1 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -142,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				23D5052522A0527200AAC9C0 /* CharactersResults.swift */,
+				23205D4B22A1AA0700D2F206 /* Homeworld.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -310,6 +313,7 @@
 				23D5053222A0B28B00AAC9C0 /* DetailsViewController.swift in Sources */,
 				23D5052622A0527200AAC9C0 /* CharactersResults.swift in Sources */,
 				23AD0779229F46FB00B0AFA1 /* MainViewController.swift in Sources */,
+				23205D4C22A1AA0700D2F206 /* Homeworld.swift in Sources */,
 				23D5052D22A0A48500AAC9C0 /* ProgressAlert.swift in Sources */,
 				2316124B229FFEAA00C3F48E /* Toast.swift in Sources */,
 				23D5051422A00F8F00AAC9C0 /* SearchListViewController.swift in Sources */,

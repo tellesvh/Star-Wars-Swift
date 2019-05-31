@@ -47,7 +47,24 @@ class API {
                 failureBlock(error.localizedDescription)
             }
         })
+    }
+    
+    static func getHomeworldInfo(
+        url: String,
+        success successBlock: @escaping ((Homeworld) -> Void),
+        failure failureBlock: @escaping ((String) -> Void)) {
         
+        Alamofire.request(url).responseHomeworld(completionHandler: { (response) in
+            print(response)
+            switch response.result {
+            case .success:
+                if let result = response.result.value {
+                    successBlock(result)
+                }
+            case .failure(let error):
+                failureBlock(error.localizedDescription)
+            }
+        })
     }
 
 }
