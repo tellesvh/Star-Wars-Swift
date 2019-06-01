@@ -18,6 +18,7 @@
 		23205D5922A1F07900D2F206 /* Species.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23205D5822A1F07900D2F206 /* Species.swift */; };
 		23205D5B22A1F67000D2F206 /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23205D5A22A1F67000D2F206 /* Vehicle.swift */; };
 		23205D5D22A1F83D00D2F206 /* Starship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23205D5C22A1F83D00D2F206 /* Starship.swift */; };
+		235EDC1B22A2AC07004996FE /* GeneralDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235EDC1A22A2AC07004996FE /* GeneralDetailsViewController.swift */; };
 		23AD0777229F46FB00B0AFA1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23AD0776229F46FB00B0AFA1 /* AppDelegate.swift */; };
 		23AD0779229F46FB00B0AFA1 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23AD0778229F46FB00B0AFA1 /* MainViewController.swift */; };
 		23AD077C229F46FB00B0AFA1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23AD077A229F46FB00B0AFA1 /* Main.storyboard */; };
@@ -49,6 +50,7 @@
 		23205D5822A1F07900D2F206 /* Species.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Species.swift; sourceTree = "<group>"; };
 		23205D5A22A1F67000D2F206 /* Vehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vehicle.swift; sourceTree = "<group>"; };
 		23205D5C22A1F83D00D2F206 /* Starship.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Starship.swift; sourceTree = "<group>"; };
+		235EDC1A22A2AC07004996FE /* GeneralDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralDetailsViewController.swift; sourceTree = "<group>"; };
 		23AD0773229F46FB00B0AFA1 /* Star Wars.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Star Wars.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		23AD0776229F46FB00B0AFA1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		23AD0778229F46FB00B0AFA1 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -99,6 +101,14 @@
 				23205D5122A1B61300D2F206 /* DetailCollectionViewCell.xib */,
 			);
 			path = CollectionViewCell;
+			sourceTree = "<group>";
+		};
+		235EDC1922A2ABD6004996FE /* GeneralDetails */ = {
+			isa = PBXGroup;
+			children = (
+				235EDC1A22A2AC07004996FE /* GeneralDetailsViewController.swift */,
+			);
+			path = GeneralDetails;
 			sourceTree = "<group>";
 		};
 		23AD076A229F46FB00B0AFA1 = {
@@ -159,6 +169,8 @@
 		23D5051222A00F4700AAC9C0 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				23205D4E22A1B56A00D2F206 /* TableViewCell */,
+				235EDC1922A2ABD6004996FE /* GeneralDetails */,
 				23D5053022A0B01000AAC9C0 /* CharacterDetails */,
 				23D5052722A05BC900AAC9C0 /* SearchList */,
 				23AD0778229F46FB00B0AFA1 /* MainViewController.swift */,
@@ -200,7 +212,6 @@
 		23D5053022A0B01000AAC9C0 /* CharacterDetails */ = {
 			isa = PBXGroup;
 			children = (
-				23205D4E22A1B56A00D2F206 /* TableViewCell */,
 				23D5053122A0B28B00AAC9C0 /* DetailsViewController.swift */,
 			);
 			path = CharacterDetails;
@@ -365,6 +376,7 @@
 				23D5052322A0522000AAC9C0 /* API.swift in Sources */,
 				23D5052A22A05C1200AAC9C0 /* ResultTableViewCell.swift in Sources */,
 				23AD0790229F5E9400B0AFA1 /* KeyboardUtil.swift in Sources */,
+				235EDC1B22A2AC07004996FE /* GeneralDetailsViewController.swift in Sources */,
 				23205D4922A1301F00D2F206 /* DetailTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

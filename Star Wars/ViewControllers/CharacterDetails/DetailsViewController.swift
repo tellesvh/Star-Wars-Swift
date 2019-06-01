@@ -12,14 +12,15 @@ class DetailsViewController: UIViewController {
     
     @IBOutlet weak var tableViewDetails: UITableView!
     var character: Character?
+    var homeworld: Homeworld?
     var films: [Film] = []
     var species: [Species] = []
     var vehicles: [Vehicle] = []
     var starships: [Starship] = []
+    var itemClicked: AnyObject?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.prefersLargeTitles = true
         UINavigationBar.appearance().largeTitleTextAttributes = [
             NSAttributedString.Key.foregroundColor: UIColor.white
         ]
@@ -33,10 +34,43 @@ class DetailsViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         navigationController?.navigationBar.prefersLargeTitles = false
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.title = character!.name
+    }
 
 }
 
-extension DetailsViewController: UITableViewDataSource, UITableViewDelegate {
+extension DetailsViewController: UITableViewDataSource, UITableViewDelegate, CollectionViewCellSelectionDelegate {
+    
+    func performClickOnCVCell(arrayType: Int, index: Int) {
+        print("type: \(arrayType), index: \(index)")
+        
+        switch arrayType {
+            case 0: // Homeworld
+                self.itemClicked = self.homeworld
+            case 1: // Film
+                self.itemClicked = films[index]
+            case 2: // Species
+                self.itemClicked = species[index]
+            case 3: // Vehicles
+                self.itemClicked = vehicles[index]
+            case 4: // Starships
+                self.itemClicked = starships[index]
+            default:
+                self.itemClicked = nil
+        }
+        
+        performSegue(withIdentifier: "DetailToGeneralDetail", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "DetailToGeneralDetail" {
+            let vc = segue.destination as! GeneralDetailsViewController
+            vc.object = self.itemClicked
+        }
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 12
@@ -44,6 +78,7 @@ extension DetailsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "DEFAULT_TABLEVIEWDETAILS_CELL_ID") as! DetailTableViewCell
+        cell.delegate = self
         
         switch indexPath.row {
             case 0:
@@ -92,6 +127,7 @@ extension DetailsViewController: UITableViewDataSource, UITableViewDelegate {
                         success: { (homeworld) in
                             cell.arrayType = 0
                             self.character?.homeworld = homeworld.name
+                            self.homeworld = homeworld
                             
                             cell.stringArray = [homeworld.name!.capitalized]
                             

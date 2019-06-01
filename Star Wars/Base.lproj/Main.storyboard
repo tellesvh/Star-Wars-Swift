@@ -125,6 +125,7 @@
                     </view>
                     <connections>
                         <outlet property="tableViewDetails" destination="Tlq-8S-sYW" id="YcU-Hz-yxT"/>
+                        <segue destination="bRp-j2-Ah6" kind="show" identifier="DetailToGeneralDetail" id="Pxl-W6-cR0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zSS-G6-jZS" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -151,6 +152,40 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j6r-uv-NO0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="132" y="105.66502463054188"/>
+        </scene>
+        <!--General Details View Controller-->
+        <scene sceneID="zSM-g5-peR">
+            <objects>
+                <viewController id="bRp-j2-Ah6" customClass="GeneralDetailsViewController" customModule="Star_Wars" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="FN2-8v-Nm8">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dH3-oM-Lq9">
+                                <rect key="frame" x="0.0" y="88" width="414" height="808"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="bRp-j2-Ah6" id="BgV-td-RLN"/>
+                                    <outlet property="delegate" destination="bRp-j2-Ah6" id="BCb-u8-wY3"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="dH3-oM-Lq9" firstAttribute="trailing" secondItem="5nc-kv-FOe" secondAttribute="trailing" id="BK1-3K-SLM"/>
+                            <constraint firstItem="dH3-oM-Lq9" firstAttribute="leading" secondItem="5nc-kv-FOe" secondAttribute="leading" id="Pue-Zw-WtI"/>
+                            <constraint firstAttribute="bottom" secondItem="dH3-oM-Lq9" secondAttribute="bottom" id="bmb-K8-GDl"/>
+                            <constraint firstItem="dH3-oM-Lq9" firstAttribute="top" secondItem="5nc-kv-FOe" secondAttribute="top" id="uA1-mM-nDU"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="5nc-kv-FOe"/>
+                    </view>
+                    <connections>
+                        <outlet property="tableViewGeneralDetails" destination="dH3-oM-Lq9" id="0Cc-Oq-Ii1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kyI-Do-gyF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3709" y="105"/>
         </scene>
     </scenes>
     <resources>

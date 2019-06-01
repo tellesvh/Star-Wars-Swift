@@ -18,6 +18,7 @@ class DetailTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollecti
     var arrayType = -1 // 0 -> Homeworld; 1 -> Films ; 2 -> Species; 3 -> Vehicles; 4 -> Starships
     var bgColorForCollectionViewCell = UIColor.white
     var bgColorForCollectionViewCellLabel = UIColor.black
+    var delegate: CollectionViewCellSelectionDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -42,9 +43,7 @@ class DetailTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath)
-        print(collectionView)
-        print(self.arrayType)
+        delegate?.performClickOnCVCell(arrayType: self.arrayType, index: indexPath.row)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -65,4 +64,8 @@ class DetailTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollecti
         return CGSize(width: size.width + 44, height: 30)
     }
     
+}
+
+protocol CollectionViewCellSelectionDelegate {
+    func performClickOnCVCell(arrayType: Int, index: Int)
 }

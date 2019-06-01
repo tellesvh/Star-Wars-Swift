@@ -5,7 +5,7 @@ import Alamofire
 class Starship: Codable {
     let name, model, manufacturer, cost_in_credits: String?
     let length, max_atmosphering_speed, crew, passengers: String?
-    let cargoCapacity, consumables, hyperdriveRating, MGLT: String?
+    let cargo_capacity, consumables, hyperdrive_rating, MGLT: String?
     let starship_class: String?
     let pilots, films: [String]?
     let created, edited: String?
@@ -17,15 +17,15 @@ class Starship: Codable {
         case length
         case max_atmosphering_speed
         case crew, passengers
-        case cargoCapacity
+        case cargo_capacity
         case consumables
-        case hyperdriveRating
+        case hyperdrive_rating
         case MGLT
         case starship_class
         case pilots, films, created, edited, url
     }
     
-    init(name: String?, model: String?, manufacturer: String?, cost_in_credits: String?, length: String?, max_atmosphering_speed: String?, crew: String?, passengers: String?, cargoCapacity: String?, consumables: String?, hyperdriveRating: String?, MGLT: String?, starship_class: String?, pilots: [String]?, films: [String]?, created: String?, edited: String?, url: String?) {
+    init(name: String?, model: String?, manufacturer: String?, cost_in_credits: String?, length: String?, max_atmosphering_speed: String?, crew: String?, passengers: String?, cargo_capacity: String?, consumables: String?, hyperdrive_rating: String?, MGLT: String?, starship_class: String?, pilots: [String]?, films: [String]?, created: String?, edited: String?, url: String?) {
         self.name = name
         self.model = model
         self.manufacturer = manufacturer
@@ -34,9 +34,9 @@ class Starship: Codable {
         self.max_atmosphering_speed = max_atmosphering_speed
         self.crew = crew
         self.passengers = passengers
-        self.cargoCapacity = cargoCapacity
+        self.cargo_capacity = cargo_capacity
         self.consumables = consumables
-        self.hyperdriveRating = hyperdriveRating
+        self.hyperdrive_rating = hyperdrive_rating
         self.MGLT = MGLT
         self.starship_class = starship_class
         self.pilots = pilots
