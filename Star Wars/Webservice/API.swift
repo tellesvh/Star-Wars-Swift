@@ -103,4 +103,22 @@ class API {
         })
     }
     
+    static func getVehicleInfo(
+        url: String,
+        success successBlock: @escaping ((Vehicle) -> Void),
+        failure failureBlock: @escaping ((String) -> Void)) {
+        
+        Alamofire.request(url).responseVehicle(completionHandler: { (response) in
+            print(response)
+            switch response.result {
+            case .success:
+                if let result = response.result.value {
+                    successBlock(result)
+                }
+            case .failure(let error):
+                failureBlock(error.localizedDescription)
+            }
+        })
+    }
+    
 }

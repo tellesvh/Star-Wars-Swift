@@ -14,7 +14,7 @@ class DetailsViewController: UIViewController {
     var character: Character?
     var films: [Film] = []
     var species: [Species] = []
-//    var vehicles: [Vehicle] = []
+    var vehicles: [Vehicle] = []
 //    var starships: [Starships] = []
     
     override func viewDidLoad() {
@@ -219,8 +219,51 @@ extension DetailsViewController: UITableViewDataSource, UITableViewDelegate {
                 }
             case 10:
                 if (self.character!.vehicles!.count > 0) {
+                    cell.arrayType = 3
                     cell.lblType.text = "Vehicles"
-                    cell.lblValue.text = "COLLECTION"
+//                    cell.lblType.isHidden = true
+                    cell.lblValue.isHidden = true
+                    
+                    if (self.vehicles.count == 0) {
+                        cell.activityIndicator.isHidden = false
+                        let group = DispatchGroup()
+                        
+                        for vehicleUrl in self.character!.vehicles! {
+                            group.enter()
+                            API.getVehicleInfo(
+                                url: vehicleUrl,
+                                success: { (vehicle) in
+                                    self.vehicles.append(vehicle)
+                                    group.leave()
+                            },
+                                failure: { (error) in print(error)})
+                        }
+                        
+                        group.notify(queue: .main) {
+                            var vehiclesString: [String] = []
+                            cell.activityIndicator.isHidden = true
+                            
+                            for vehicles in self.vehicles {
+                                if let name = vehicles.name {
+                                    if (!vehiclesString.contains(name)) {
+                                        vehiclesString.append(name)
+                                    }
+                                }
+                            }
+                            
+                            print(vehiclesString)
+                            
+                            cell.stringArray = vehiclesString
+                            cell.bgColorForCollectionViewCell = UIColor.red
+                            cell.bgColorForCollectionViewCellLabel = UIColor.white
+                            
+                            cell.lblType.isHidden = false
+                            cell.collectionView.isHidden = false
+                            
+                            cell.collectionView.reloadData()
+                            tableView.reloadData()
+                        }
+                    }
                 } else {
                     cell.lblType.text = "Vehicles"
                     cell.lblValue.text = "N/A"
