@@ -15,7 +15,7 @@ class DetailsViewController: UIViewController {
     var films: [Film] = []
     var species: [Species] = []
     var vehicles: [Vehicle] = []
-//    var starships: [Starships] = []
+    var starships: [Starship] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,13 +39,6 @@ class DetailsViewController: UIViewController {
 extension DetailsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        name, height, mass, hairColor: String?
-//        skinColor: String?
-//        eyeColor: String?
-//        birthYear: String?
-//        gender: String?
-//        homeworld: String?
-//        films, species, vehicles, starships: [String]?
         return 12
     }
     
@@ -78,7 +71,11 @@ extension DetailsViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.lblValue.text = self.character!.eye_color!.capitalized
             case 5:
                 cell.lblType.text = "Birth Year"
-                cell.lblValue.text = self.character!.birth_year?.capitalized
+                if (Int(self.character!.birth_year!.prefix(1)) != nil) {
+                    cell.lblValue.text = self.character!.birth_year
+                } else {
+                    cell.lblValue.text = self.character!.birth_year?.capitalized
+                }
             case 6:
                 cell.lblType.text = "Gender"
                 cell.lblValue.text = self.character!.gender!.capitalized
@@ -243,8 +240,8 @@ extension DetailsViewController: UITableViewDataSource, UITableViewDelegate {
                             var vehiclesString: [String] = []
                             cell.activityIndicator.isHidden = true
                             
-                            for vehicles in self.vehicles {
-                                if let name = vehicles.name {
+                            for vehicle in self.vehicles {
+                                if let name = vehicle.name {
                                     if (!vehiclesString.contains(name)) {
                                         vehiclesString.append(name)
                                     }
@@ -270,8 +267,51 @@ extension DetailsViewController: UITableViewDataSource, UITableViewDelegate {
                 }
             case 11:
                 if (self.character!.starships!.count > 0) {
+                    cell.arrayType = 4
                     cell.lblType.text = "Starships"
-                    cell.lblValue.text = "COLLECTION"
+//                    cell.lblType.isHidden = true
+                    cell.lblValue.isHidden = true
+                    
+                    if (self.starships.count == 0) {
+                        cell.activityIndicator.isHidden = false
+                        let group = DispatchGroup()
+                        
+                        for starshipUrl in self.character!.starships! {
+                            group.enter()
+                            API.getStarshipInfo(
+                                url: starshipUrl,
+                                success: { (starship) in
+                                    self.starships.append(starship)
+                                    group.leave()
+                            },
+                                failure: { (error) in print(error)})
+                        }
+                        
+                        group.notify(queue: .main) {
+                            var starshipsString: [String] = []
+                            cell.activityIndicator.isHidden = true
+                            
+                            for starship in self.starships {
+                                if let name = starship.name {
+                                    if (!starshipsString.contains(name)) {
+                                        starshipsString.append(name)
+                                    }
+                                }
+                            }
+                            
+                            print(starshipsString)
+                            
+                            cell.stringArray = starshipsString
+                            cell.bgColorForCollectionViewCell = UIColor.blue
+                            cell.bgColorForCollectionViewCellLabel = UIColor.white
+                            
+                            cell.lblType.isHidden = false
+                            cell.collectionView.isHidden = false
+                            
+                            cell.collectionView.reloadData()
+                            tableView.reloadData()
+                        }
+                    }
                 } else {
                     cell.lblType.text = "Starships"
                     cell.lblValue.text = "N/A"

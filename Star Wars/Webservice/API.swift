@@ -121,4 +121,22 @@ class API {
         })
     }
     
+    static func getStarshipInfo(
+        url: String,
+        success successBlock: @escaping ((Starship) -> Void),
+        failure failureBlock: @escaping ((String) -> Void)) {
+        
+        Alamofire.request(url).responseStarship(completionHandler: { (response) in
+            print(response)
+            switch response.result {
+            case .success:
+                if let result = response.result.value {
+                    successBlock(result)
+                }
+            case .failure(let error):
+                failureBlock(error.localizedDescription)
+            }
+        })
+    }
+    
 }
