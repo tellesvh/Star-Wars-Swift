@@ -13,6 +13,9 @@ class GeneralDetailsViewController: UIViewController {
     var object: AnyObject?
     @IBOutlet weak var tableViewGeneralDetails: UITableView!
     
+    var residents: [Character] = []
+    var films: [Film] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -88,34 +91,142 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
             switch indexPath.row {
                 case 0:
                     cell.lblType.text = "Rotation Period"
-                    cell.lblValue.text = homeworld.rotation_period
+                    if (Int(homeworld.rotation_period!) != nil) {
+                        cell.lblValue.text = homeworld.rotation_period! + " hours"
+                    } else {
+                        cell.lblValue.text = homeworld.rotation_period!.capitalized
+                    }
                 case 1:
                     cell.lblType.text = "Orbital Period"
-                    cell.lblValue.text = homeworld.orbital_period
+                    if (Int(homeworld.orbital_period!) != nil) {
+                        cell.lblValue.text = homeworld.orbital_period! + " days"
+                    } else {
+                        cell.lblValue.text = homeworld.orbital_period!.capitalized
+                    }
                 case 2:
                     cell.lblType.text = "Diameter"
-                    cell.lblValue.text = homeworld.diameter
+                    if (Int(homeworld.diameter!) != nil) {
+                        cell.lblValue.text = formatInt(inputNumber: homeworld.diameter!) + " km"
+                    } else {
+                        cell.lblValue.text = homeworld.diameter!.capitalized
+                    }
                 case 3:
                     cell.lblType.text = "Climate"
-                    cell.lblValue.text = homeworld.climate
+                    cell.lblValue.text = homeworld.climate?.capitalized
                 case 4:
                     cell.lblType.text = "Gravity"
-                    cell.lblValue.text = homeworld.gravity
+                    cell.lblValue.text = homeworld.gravity?.capitalized
                 case 5:
                     cell.lblType.text = "Terrain"
-                    cell.lblValue.text = homeworld.terrain
+                    cell.lblValue.text = homeworld.terrain?.capitalized
                 case 6:
                     cell.lblType.text = "Surface Water"
-                    cell.lblValue.text = homeworld.surface_water
+                    if (Int(homeworld.surface_water!) != nil) {
+                        cell.lblValue.text = homeworld.surface_water! + "%"
+                    } else {
+                        cell.lblValue.text = homeworld.surface_water!.capitalized
+                    }
                 case 7:
                     cell.lblType.text = "Population"
-                    cell.lblValue.text = homeworld.population
+                    if (Int(homeworld.population!) != nil) {
+                        cell.lblValue.text = formatInt(inputNumber: homeworld.population!)
+                    } else {
+                        cell.lblValue.text = homeworld.population!.capitalized
+                    }
                 case 8:
                     cell.lblType.text = "Residents"
-                    cell.lblValue.text = "COLLECTION"
+                    cell.lblValue.isHidden = true
+                
+                    if (self.residents.count == 0) {
+                        cell.activityIndicator.isHidden = false
+                        let group = DispatchGroup()
+                        
+                        for residentUrl in homeworld.residents! {
+                            group.enter()
+                            API.getCharacterInfo(
+                                url: residentUrl,
+                                success: { (character) in
+                                    self.residents.append(character)
+                                    group.leave()
+                            },
+                                failure: { (error) in print(error)})
+                        }
+                        
+                        group.notify(queue: .main) {
+                            var charactersString: [String] = []
+                            cell.activityIndicator.isHidden = true
+                            
+                            for resident in self.residents {
+                                if let name = resident.name {
+                                    if (!charactersString.contains(name)) {
+                                        charactersString.append(name)
+                                    }
+                                }
+                            }
+                            
+                            print(charactersString)
+                            
+                            cell.stringArray = charactersString
+                            cell.bgColorForCollectionViewCell = UIColor.orange
+                            cell.bgColorForCollectionViewCellLabel = UIColor.white
+                            
+                            cell.lblType.isHidden = false
+                            cell.collectionView.isHidden = false
+                            
+                            cell.collectionView.reloadData()
+                            tableView.reloadData()
+                        }
+                    } else {
+                        cell.lblType.text = "Residents"
+                        cell.lblValue.text = "N/A"
+                    }
                 case 9:
                     cell.lblType.text = "Films"
-                    cell.lblValue.text = "COLLECTION"
+                    cell.lblValue.isHidden = true
+                    
+                    if (self.films.count == 0) {
+                        cell.activityIndicator.isHidden = false
+                        let group = DispatchGroup()
+                        
+                        for filmUrl in homeworld.films! {
+                            group.enter()
+                            API.getFilmInfo(
+                                url: filmUrl,
+                                success: { (film) in
+                                    self.films.append(film)
+                                    group.leave()
+                            },
+                                failure: { (error) in print(error)})
+                        }
+                        
+                        group.notify(queue: .main) {
+                            var filmsString: [String] = []
+                            cell.activityIndicator.isHidden = true
+                            
+                            for film in self.films {
+                                if let title = film.title {
+                                    if (!filmsString.contains(title)) {
+                                        filmsString.append(title)
+                                    }
+                                }
+                            }
+                            
+                            print(filmsString)
+                            
+                            cell.stringArray = filmsString
+                            cell.bgColorForCollectionViewCell = UIColor.brown
+                            cell.bgColorForCollectionViewCellLabel = UIColor.white
+                            
+                            cell.lblType.isHidden = false
+                            cell.collectionView.isHidden = false
+                            
+                            cell.collectionView.reloadData()
+                            tableView.reloadData()
+                        }
+                    } else {
+                        cell.lblType.text = "Films"
+                        cell.lblValue.text = "N/A"
+                    }
                 default:
                     cell.lblType.text = ""
                     cell.lblValue.text = ""
@@ -294,6 +405,16 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+    
+    func formatInt(inputNumber: String) -> String {
+        var count: Int = inputNumber.count
+        var newInt = inputNumber
+        while count >= 4 {
+            count = count - 3
+            newInt.insert(".", at: newInt.index(newInt.startIndex, offsetBy: count))
+        }
+        return "\(newInt)"
     }
     
 }

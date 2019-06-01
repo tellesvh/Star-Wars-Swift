@@ -49,6 +49,24 @@ class API {
         })
     }
     
+    static func getCharacterInfo(
+        url: String,
+        success successBlock: @escaping ((Character) -> Void),
+        failure failureBlock: @escaping ((String) -> Void)) {
+        
+        Alamofire.request(url).responseCharacter(completionHandler: { (response) in
+            print(response)
+            switch response.result {
+            case .success:
+                if let result = response.result.value {
+                    successBlock(result)
+                }
+            case .failure(let error):
+                failureBlock(error.localizedDescription)
+            }
+        })
+    }
+    
     static func getHomeworldInfo(
         url: String,
         success successBlock: @escaping ((Homeworld) -> Void),

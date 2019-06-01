@@ -19,6 +19,7 @@
 		23205D5B22A1F67000D2F206 /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23205D5A22A1F67000D2F206 /* Vehicle.swift */; };
 		23205D5D22A1F83D00D2F206 /* Starship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23205D5C22A1F83D00D2F206 /* Starship.swift */; };
 		235EDC1B22A2AC07004996FE /* GeneralDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235EDC1A22A2AC07004996FE /* GeneralDetailsViewController.swift */; };
+		235EDC1F22A2F6F4004996FE /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235EDC1E22A2F6F4004996FE /* Character.swift */; };
 		23AD0777229F46FB00B0AFA1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23AD0776229F46FB00B0AFA1 /* AppDelegate.swift */; };
 		23AD0779229F46FB00B0AFA1 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23AD0778229F46FB00B0AFA1 /* MainViewController.swift */; };
 		23AD077C229F46FB00B0AFA1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23AD077A229F46FB00B0AFA1 /* Main.storyboard */; };
@@ -51,6 +52,7 @@
 		23205D5A22A1F67000D2F206 /* Vehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vehicle.swift; sourceTree = "<group>"; };
 		23205D5C22A1F83D00D2F206 /* Starship.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Starship.swift; sourceTree = "<group>"; };
 		235EDC1A22A2AC07004996FE /* GeneralDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralDetailsViewController.swift; sourceTree = "<group>"; };
+		235EDC1E22A2F6F4004996FE /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
 		23AD0773229F46FB00B0AFA1 /* Star Wars.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Star Wars.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		23AD0776229F46FB00B0AFA1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		23AD0778229F46FB00B0AFA1 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -111,6 +113,14 @@
 			path = GeneralDetails;
 			sourceTree = "<group>";
 		};
+		235EDC2022A2FC5C004996FE /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				23205D4E22A1B56A00D2F206 /* TableViewCell */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		23AD076A229F46FB00B0AFA1 = {
 			isa = PBXGroup;
 			children = (
@@ -135,6 +145,7 @@
 				23D5052422A0526300AAC9C0 /* Models */,
 				23D5051F22A0520100AAC9C0 /* Webservice */,
 				23AD078C229F49E300B0AFA1 /* Src */,
+				235EDC2022A2FC5C004996FE /* Cells */,
 				23D5051222A00F4700AAC9C0 /* ViewControllers */,
 				23AD0791229F60F100B0AFA1 /* Util */,
 				23AD0776229F46FB00B0AFA1 /* AppDelegate.swift */,
@@ -169,7 +180,6 @@
 		23D5051222A00F4700AAC9C0 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				23205D4E22A1B56A00D2F206 /* TableViewCell */,
 				235EDC1922A2ABD6004996FE /* GeneralDetails */,
 				23D5053022A0B01000AAC9C0 /* CharacterDetails */,
 				23D5052722A05BC900AAC9C0 /* SearchList */,
@@ -190,6 +200,7 @@
 			isa = PBXGroup;
 			children = (
 				23D5052522A0527200AAC9C0 /* CharactersResults.swift */,
+				235EDC1E22A2F6F4004996FE /* Character.swift */,
 				23205D4B22A1AA0700D2F206 /* Homeworld.swift */,
 				23205D5622A1DEC400D2F206 /* Film.swift */,
 				23205D5822A1F07900D2F206 /* Species.swift */,
@@ -366,6 +377,7 @@
 				23205D5922A1F07900D2F206 /* Species.swift in Sources */,
 				23205D4C22A1AA0700D2F206 /* Homeworld.swift in Sources */,
 				23D5052D22A0A48500AAC9C0 /* ProgressAlert.swift in Sources */,
+				235EDC1F22A2F6F4004996FE /* Character.swift in Sources */,
 				23205D5B22A1F67000D2F206 /* Vehicle.swift in Sources */,
 				2316124B229FFEAA00C3F48E /* Toast.swift in Sources */,
 				23205D5D22A1F83D00D2F206 /* Starship.swift in Sources */,
