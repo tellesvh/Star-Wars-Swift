@@ -134,94 +134,98 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
                         cell.lblValue.text = homeworld.population!.capitalized
                     }
                 case 8:
-                    cell.lblType.text = "Residents"
-                    cell.lblValue.isHidden = true
-                
-                    if (self.residents.count == 0) {
-                        cell.activityIndicator.isHidden = false
-                        let group = DispatchGroup()
-                        
-                        for residentUrl in homeworld.residents! {
-                            group.enter()
-                            API.getCharacterInfo(
-                                url: residentUrl,
-                                success: { (character) in
-                                    self.residents.append(character)
-                                    group.leave()
-                            },
-                                failure: { (error) in print(error)})
-                        }
-                        
-                        group.notify(queue: .main) {
-                            var charactersString: [String] = []
-                            cell.activityIndicator.isHidden = true
+                    if (homeworld.residents!.count > 0) {
+                        cell.lblType.text = "Residents"
+                        cell.lblValue.isHidden = true
+                    
+                        if (self.residents.count == 0) {
+                            cell.activityIndicator.isHidden = false
+                            let group = DispatchGroup()
                             
-                            for resident in self.residents {
-                                if let name = resident.name {
-                                    if (!charactersString.contains(name)) {
-                                        charactersString.append(name)
-                                    }
-                                }
+                            for residentUrl in homeworld.residents! {
+                                group.enter()
+                                API.getCharacterInfo(
+                                    url: residentUrl,
+                                    success: { (character) in
+                                        self.residents.append(character)
+                                        group.leave()
+                                },
+                                    failure: { (error) in print(error)})
                             }
                             
-                            print(charactersString)
-                            
-                            cell.stringArray = charactersString
-                            cell.bgColorForCollectionViewCell = UIColor.orange
-                            cell.bgColorForCollectionViewCellLabel = UIColor.white
-                            
-                            cell.lblType.isHidden = false
-                            cell.collectionView.isHidden = false
-                            
-                            cell.collectionView.reloadData()
-                            tableView.reloadData()
+                            group.notify(queue: .main) {
+                                var charactersString: [String] = []
+                                cell.activityIndicator.isHidden = true
+                                
+                                for resident in self.residents {
+                                    if let name = resident.name {
+                                        if (!charactersString.contains(name)) {
+                                            charactersString.append(name)
+                                        }
+                                    }
+                                }
+                                
+                                print(charactersString)
+                                
+                                cell.stringArray = charactersString
+                                cell.bgColorForCollectionViewCell = UIColor.orange
+                                cell.bgColorForCollectionViewCellLabel = UIColor.white
+                                
+                                cell.lblType.isHidden = false
+                                cell.collectionView.isHidden = false
+                                
+                                cell.collectionView.reloadData()
+                                tableView.reloadData()
+                            }
                         }
                     } else {
                         cell.lblType.text = "Residents"
                         cell.lblValue.text = "N/A"
                     }
                 case 9:
-                    cell.lblType.text = "Films"
-                    cell.lblValue.isHidden = true
-                    
-                    if (self.films.count == 0) {
-                        cell.activityIndicator.isHidden = false
-                        let group = DispatchGroup()
+                    if (homeworld.films!.count > 0) {
+                        cell.lblType.text = "Films"
+                        cell.lblValue.isHidden = true
                         
-                        for filmUrl in homeworld.films! {
-                            group.enter()
-                            API.getFilmInfo(
-                                url: filmUrl,
-                                success: { (film) in
-                                    self.films.append(film)
-                                    group.leave()
-                            },
-                                failure: { (error) in print(error)})
-                        }
-                        
-                        group.notify(queue: .main) {
-                            var filmsString: [String] = []
-                            cell.activityIndicator.isHidden = true
+                        if (self.films.count == 0) {
+                            cell.activityIndicator.isHidden = false
+                            let group = DispatchGroup()
                             
-                            for film in self.films {
-                                if let title = film.title {
-                                    if (!filmsString.contains(title)) {
-                                        filmsString.append(title)
-                                    }
-                                }
+                            for filmUrl in homeworld.films! {
+                                group.enter()
+                                API.getFilmInfo(
+                                    url: filmUrl,
+                                    success: { (film) in
+                                        self.films.append(film)
+                                        group.leave()
+                                },
+                                    failure: { (error) in print(error)})
                             }
                             
-                            print(filmsString)
-                            
-                            cell.stringArray = filmsString
-                            cell.bgColorForCollectionViewCell = UIColor.brown
-                            cell.bgColorForCollectionViewCellLabel = UIColor.white
-                            
-                            cell.lblType.isHidden = false
-                            cell.collectionView.isHidden = false
-                            
-                            cell.collectionView.reloadData()
-                            tableView.reloadData()
+                            group.notify(queue: .main) {
+                                var filmsString: [String] = []
+                                cell.activityIndicator.isHidden = true
+                                
+                                for film in self.films {
+                                    if let title = film.title {
+                                        if (!filmsString.contains(title)) {
+                                            filmsString.append(title)
+                                        }
+                                    }
+                                }
+                                
+                                print(filmsString)
+                                
+                                cell.stringArray = filmsString
+                                cell.bgColorForCollectionViewCell = UIColor.brown
+                                cell.bgColorForCollectionViewCellLabel = UIColor.white
+                                
+                                cell.lblType.isHidden = false
+                                cell.collectionView.isHidden = false
+                                
+                                cell.collectionView.reloadData()
+                                tableView.reloadData()
+                            }
                         }
                     } else {
                         cell.lblType.text = "Films"

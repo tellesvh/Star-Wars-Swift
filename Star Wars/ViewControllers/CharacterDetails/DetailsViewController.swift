@@ -12,7 +12,7 @@ class DetailsViewController: UIViewController {
     
     @IBOutlet weak var tableViewDetails: UITableView!
     var character: Character?
-    var homeworld: Homeworld?
+    var homeworld: Homeworld? = nil
     var films: [Film] = []
     var species: [Species] = []
     var vehicles: [Vehicle] = []
@@ -116,17 +116,16 @@ extension DetailsViewController: UITableViewDataSource, UITableViewDelegate, Col
                 cell.lblValue.text = self.character!.gender!.capitalized
             case 7:
                 cell.lblType.text = "Homeworld"
-//                cell.lblValue.isHidden = true
-                if (self.character!.homeworld!.contains("https://")) {
+//                    cell.lblType.isHidden = true
+                cell.lblValue.isHidden = true
+                
+                if self.homeworld == nil {
                     cell.activityIndicator.isHidden = false
-                    cell.lblType.isHidden = true
-                    cell.lblValue.isHidden = true
                     
                     API.getHomeworldInfo(
                         url: self.character!.homeworld!,
                         success: { (homeworld) in
                             cell.arrayType = 0
-                            self.character?.homeworld = homeworld.name
                             self.homeworld = homeworld
                             
                             cell.stringArray = [homeworld.name!.capitalized]
