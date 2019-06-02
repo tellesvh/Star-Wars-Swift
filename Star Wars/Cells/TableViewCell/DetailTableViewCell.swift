@@ -18,6 +18,7 @@ class DetailTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollecti
     var arrayType = -1 // 0 -> Homeworld; 1 -> Films ; 2 -> Species; 3 -> Vehicles; 4 -> Starships
     var bgColorForCollectionViewCell = UIColor.white
     var bgColorForCollectionViewCellLabel = UIColor.black
+    var isBackgroundClear = false
     var delegate: CollectionViewCellSelectionDelegate?
     
     override func awakeFromNib() {
@@ -52,6 +53,12 @@ class DetailTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollecti
         cell.lblCollectionViewCell.text = stringArray[indexPath.row]
         cell.lblCollectionViewCell.textColor = bgColorForCollectionViewCellLabel
         cell.collectionViewCellView.backgroundColor = bgColorForCollectionViewCell
+        
+        if (isBackgroundClear) {
+            cell.collectionViewCellView.backgroundColor = UIColor.clear
+            cell.collectionViewCellView.borderColor = bgColorForCollectionViewCell
+            cell.collectionViewCellView.borderWidth = 2
+        }
         
         return cell
     }

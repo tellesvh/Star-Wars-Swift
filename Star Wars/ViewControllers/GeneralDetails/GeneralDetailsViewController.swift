@@ -180,7 +180,8 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
                                 
                                 cell.stringArray = charactersString
                                 cell.bgColorForCollectionViewCell = UIColor.orange
-                                cell.bgColorForCollectionViewCellLabel = UIColor.white
+                                cell.bgColorForCollectionViewCellLabel = UIColor.black
+                                cell.isBackgroundClear = true
                                 
                                 cell.lblType.isHidden = false
                                 cell.collectionView.isHidden = false
@@ -230,7 +231,8 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
                                 
                                 cell.stringArray = filmsString
                                 cell.bgColorForCollectionViewCell = UIColor.brown
-                                cell.bgColorForCollectionViewCellLabel = UIColor.white
+                                cell.bgColorForCollectionViewCellLabel = UIColor.black
+                                cell.isBackgroundClear = true
                                 
                                 cell.lblType.isHidden = false
                                 cell.collectionView.isHidden = false
@@ -309,7 +311,8 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
                                 
                                 cell.stringArray = charactersString
                                 cell.bgColorForCollectionViewCell = UIColor.orange
-                                cell.bgColorForCollectionViewCellLabel = UIColor.white
+                                cell.bgColorForCollectionViewCellLabel = UIColor.black
+                                cell.isBackgroundClear = true
                                 
                                 cell.lblType.isHidden = false
                                 cell.collectionView.isHidden = false
@@ -359,7 +362,8 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
                                 
                                 cell.stringArray = planetsString
                                 cell.bgColorForCollectionViewCell = UIColor(red: 0, green: 140/255, blue: 25/255, alpha: 1)
-                                cell.bgColorForCollectionViewCellLabel = UIColor.white
+                                cell.bgColorForCollectionViewCellLabel = UIColor.black
+                                cell.isBackgroundClear = true
                                 
                                 cell.lblType.isHidden = false
                                 cell.collectionView.isHidden = false
@@ -409,7 +413,8 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
                                 
                                 cell.stringArray = starshipsString
                                 cell.bgColorForCollectionViewCell = UIColor.blue
-                                cell.bgColorForCollectionViewCellLabel = UIColor.white
+                                cell.bgColorForCollectionViewCellLabel = UIColor.black
+                                cell.isBackgroundClear = true
                                 
                                 cell.lblType.isHidden = false
                                 cell.collectionView.isHidden = false
@@ -459,7 +464,8 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
                                 
                                 cell.stringArray = vehiclesString
                                 cell.bgColorForCollectionViewCell = UIColor.red
-                                cell.bgColorForCollectionViewCellLabel = UIColor.white
+                                cell.bgColorForCollectionViewCellLabel = UIColor.black
+                                cell.isBackgroundClear = true
                                 
                                 cell.lblType.isHidden = false
                                 cell.collectionView.isHidden = false
@@ -509,7 +515,8 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
                                 
                                 cell.stringArray = speciesString
                                 cell.bgColorForCollectionViewCell = UIColor.purple
-                                cell.bgColorForCollectionViewCellLabel = UIColor.white
+                                cell.bgColorForCollectionViewCellLabel = UIColor.black
+                                cell.isBackgroundClear = true
                                 
                                 cell.lblType.isHidden = false
                                 cell.collectionView.isHidden = false
