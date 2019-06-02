@@ -29,15 +29,15 @@ class GeneralDetailsViewController: UIViewController {
         self.navigationController?.navigationBar.topItem?.title = "";
         
         if let homeworld = object as? Homeworld {
-            navigationItem.title = homeworld.name
+            navigationItem.title = homeworld.name?.capitalized
         } else if let film = object as? Film {
-            navigationItem.title = film.title
+            navigationItem.title = film.title?.capitalized
         } else if let species = object as? Species {
-            navigationItem.title = species.name
+            navigationItem.title = species.name?.capitalized
         } else if let vehicle = object as? Vehicle {
-            navigationItem.title = vehicle.name
+            navigationItem.title = vehicle.name?.capitalized
         } else if let starship = object as? Starship {
-            navigationItem.title = starship.name
+            navigationItem.title = starship.name?.capitalized
         }
         
         self.tableViewGeneralDetails.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
@@ -171,7 +171,7 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
                                 for resident in self.characters {
                                     if let name = resident.name {
                                         if (!charactersString.contains(name)) {
-                                            charactersString.append(name)
+                                            charactersString.append(name.capitalized)
                                         }
                                     }
                                 }
@@ -222,7 +222,7 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
                                 for film in self.films {
                                     if let title = film.title {
                                         if (!filmsString.contains(title)) {
-                                            filmsString.append(title)
+                                            filmsString.append(title.capitalized)
                                         }
                                     }
                                 }
@@ -302,7 +302,7 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
                                 for character in self.characters {
                                     if let name = character.name {
                                         if (!charactersString.contains(name)) {
-                                            charactersString.append(name)
+                                            charactersString.append(name.capitalized)
                                         }
                                     }
                                 }
@@ -353,7 +353,7 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
                                 for planet in self.planets {
                                     if let name = planet.name {
                                         if (!planetsString.contains(name)) {
-                                            planetsString.append(name)
+                                            planetsString.append(name.capitalized)
                                         }
                                     }
                                 }
@@ -404,7 +404,7 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
                                 for starship in self.starships {
                                     if let name = starship.name {
                                         if (!starshipsString.contains(name)) {
-                                            starshipsString.append(name)
+                                            starshipsString.append(name.capitalized)
                                         }
                                     }
                                 }
@@ -455,7 +455,7 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
                                 for vehicle in self.vehicles {
                                     if let name = vehicle.name {
                                         if (!vehiclesString.contains(name)) {
-                                            vehiclesString.append(name)
+                                            vehiclesString.append(name.capitalized)
                                         }
                                     }
                                 }
@@ -506,7 +506,7 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
                                 for species in self.species {
                                     if let name = species.name {
                                         if (!speciesString.contains(name)) {
-                                            speciesString.append(name)
+                                            speciesString.append(name.capitalized)
                                         }
                                     }
                                 }
@@ -536,37 +536,183 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
             switch indexPath.row {
                 case 0:
                     cell.lblType.text = "Classification"
-                    cell.lblValue.text = species.classification
+                    cell.lblValue.text = species.classification?.capitalized
                 case 1:
                     cell.lblType.text = "Designation"
-                    cell.lblValue.text = species.designation
+                    cell.lblValue.text = species.designation?.capitalized
                 case 2:
                     cell.lblType.text = "Average Height"
-                    cell.lblValue.text = species.average_height
+                    if (Double(species.average_height!) != nil)  {
+                        cell.lblValue.text = "\(Measurement(value: Double(species.average_height!) as! Double, unit: UnitLength.centimeters).converted(to: UnitLength.meters))"
+                    } else {
+                        cell.lblValue.text = species.average_height!.capitalized
+                    }
                 case 3:
                     cell.lblType.text = "Skin Colors"
-                    cell.lblValue.text = species.skin_colors
+                    cell.lblValue.text = species.skin_colors?.capitalized
                 case 4:
                     cell.lblType.text = "Hair Colors"
-                    cell.lblValue.text = species.hair_colors
+                    cell.lblValue.text = species.hair_colors!.capitalized
                 case 5:
                     cell.lblType.text = "Eye Colors"
-                    cell.lblValue.text = species.eye_colors
+                    cell.lblValue.text = species.eye_colors!.capitalized
                 case 6:
                     cell.lblType.text = "Average Lifespan"
-                    cell.lblValue.text = species.average_lifespan
+                    if (Int(species.average_lifespan!) != nil) {
+                        cell.lblValue.text = formatInt(inputNumber: species.average_lifespan!) + " years"
+                    } else {
+                        cell.lblValue.text = species.average_lifespan!.capitalized
+                    }
                 case 7:
+                    cell = tableView.dequeueReusableCell(withIdentifier: "DEFAULT_TABLEVIEWGENDETAILS_CELL_ID_COLLECTION-PLANETS") as! DetailTableViewCell
                     cell.lblType.text = "Homeworld"
-                    cell.lblValue.text = species.homeworld
+                    
+                    if (species.homeworld!.contains("https://")) {
+                        cell.lblValue.isHidden = true
+                        
+                        if (self.planets.count == 0) {
+                            cell.activityIndicator.isHidden = false
+                            
+                            API.getHomeworldInfo(
+                                url: species.homeworld!,
+                                success: { (planet) in
+                                    self.planets.append(planet)
+                                    var planetsString: [String] = []
+                                    cell.activityIndicator.isHidden = true
+                                    
+                                    for planet in self.planets {
+                                        if let name = planet.name {
+                                            if (!planetsString.contains(name)) {
+                                                planetsString.append(name.capitalized)
+                                            }
+                                        }
+                                    }
+                                    
+                                    print(planetsString)
+                                    
+                                    cell.stringArray = planetsString
+                                    cell.bgColorForCollectionViewCell = UIColor(red: 0, green: 140/255, blue: 25/255, alpha: 1)
+                                    cell.bgColorForCollectionViewCellLabel = UIColor.black
+                                    cell.isBackgroundClear = true
+                                    
+                                    cell.lblType.isHidden = false
+                                    cell.collectionView.isHidden = false
+                                    
+                                    cell.collectionView.reloadData()
+                                    tableView.reloadData()
+                            },
+                                failure: { (error) in print(error)})
+                        }
+                    } else {
+                        cell.lblValue.text = species.homeworld!.capitalized
+                    }
                 case 8:
                     cell.lblType.text = "Language"
-                    cell.lblValue.text = species.language
+                    cell.lblValue.text = species.language!.capitalized
                 case 9:
+                    cell = tableView.dequeueReusableCell(withIdentifier: "DEFAULT_TABLEVIEWGENDETAILS_CELL_ID_COLLECTION-CHARACTERS") as! DetailTableViewCell
                     cell.lblType.text = "People"
-                    cell.lblValue.text = "COLLECTION"
+                
+                    if (species.people!.count > 0) {
+                        cell.lblValue.isHidden = true
+                        
+                        if (self.characters.count == 0) {
+                            cell.activityIndicator.isHidden = false
+                            let group = DispatchGroup()
+                            
+                            for characterUrl in species.people! {
+                                group.enter()
+                                API.getCharacterInfo(
+                                    url: characterUrl,
+                                    success: { (character) in
+                                        self.characters.append(character)
+                                        group.leave()
+                                },
+                                    failure: { (error) in print(error)})
+                            }
+                            
+                            group.notify(queue: .main) {
+                                var charactersString: [String] = []
+                                cell.activityIndicator.isHidden = true
+                                
+                                for character in self.characters {
+                                    if let name = character.name {
+                                        if (!charactersString.contains(name)) {
+                                            charactersString.append(name.capitalized)
+                                        }
+                                    }
+                                }
+                                
+                                print(charactersString)
+                                
+                                cell.stringArray = charactersString
+                                cell.bgColorForCollectionViewCell = UIColor.orange
+                                cell.bgColorForCollectionViewCellLabel = UIColor.black
+                                cell.isBackgroundClear = true
+                                
+                                cell.lblType.isHidden = false
+                                cell.collectionView.isHidden = false
+                                
+                                cell.collectionView.reloadData()
+                                tableView.reloadData()
+                            }
+                        }
+                    } else {
+                        cell.lblValue.text = "N/A"
+                    }
                 case 10:
+                    cell = tableView.dequeueReusableCell(withIdentifier: "DEFAULT_TABLEVIEWGENDETAILS_CELL_ID_COLLECTION-FILMS") as! DetailTableViewCell
                     cell.lblType.text = "Films"
-                    cell.lblValue.text = "COLLECTION"
+                
+                    if (species.films!.count > 0) {
+                        cell.lblType.text = "Films"
+                        cell.lblValue.isHidden = true
+                        
+                        if (self.films.count == 0) {
+                            cell.activityIndicator.isHidden = false
+                            let group = DispatchGroup()
+                            
+                            for filmUrl in species.films! {
+                                group.enter()
+                                API.getFilmInfo(
+                                    url: filmUrl,
+                                    success: { (film) in
+                                        self.films.append(film)
+                                        group.leave()
+                                },
+                                    failure: { (error) in print(error)})
+                            }
+                            
+                            group.notify(queue: .main) {
+                                var filmsString: [String] = []
+                                cell.activityIndicator.isHidden = true
+                                
+                                for film in self.films {
+                                    if let title = film.title {
+                                        if (!filmsString.contains(title)) {
+                                            filmsString.append(title.capitalized)
+                                        }
+                                    }
+                                }
+                                
+                                print(filmsString)
+                                
+                                cell.stringArray = filmsString
+                                cell.bgColorForCollectionViewCell = UIColor.brown
+                                cell.bgColorForCollectionViewCellLabel = UIColor.black
+                                cell.isBackgroundClear = true
+                                
+                                cell.lblType.isHidden = false
+                                cell.collectionView.isHidden = false
+                                
+                                cell.collectionView.reloadData()
+                                tableView.reloadData()
+                            }
+                        }
+                    } else {
+                        cell.lblType.text = "Films"
+                        cell.lblValue.text = "N/A"
+                }
                 default:
                     cell.lblType.text = ""
                     cell.lblValue.text = ""

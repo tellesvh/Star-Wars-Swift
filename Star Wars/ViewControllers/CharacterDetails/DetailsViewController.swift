@@ -176,7 +176,7 @@ extension DetailsViewController: UITableViewDataSource, UITableViewDelegate, Col
                             for film in self.films {
                                 if let title = film.title {
                                     if (!filmsString.contains(title)) {
-                                        filmsString.append(title)
+                                        filmsString.append(title.capitalized)
                                     }
                                 }
                             }
@@ -227,7 +227,7 @@ extension DetailsViewController: UITableViewDataSource, UITableViewDelegate, Col
                             for species in self.species {
                                 if let name = species.name {
                                     if (!speciesString.contains(name)) {
-                                        speciesString.append(name)
+                                        speciesString.append(name.capitalized)
                                     }
                                 }
                             }
@@ -278,7 +278,7 @@ extension DetailsViewController: UITableViewDataSource, UITableViewDelegate, Col
                             for vehicle in self.vehicles {
                                 if let name = vehicle.name {
                                     if (!vehiclesString.contains(name)) {
-                                        vehiclesString.append(name)
+                                        vehiclesString.append(name.capitalized)
                                     }
                                 }
                             }
@@ -329,7 +329,7 @@ extension DetailsViewController: UITableViewDataSource, UITableViewDelegate, Col
                             for starship in self.starships {
                                 if let name = starship.name {
                                     if (!starshipsString.contains(name)) {
-                                        starshipsString.append(name)
+                                        starshipsString.append(name.capitalized)
                                     }
                                 }
                             }
