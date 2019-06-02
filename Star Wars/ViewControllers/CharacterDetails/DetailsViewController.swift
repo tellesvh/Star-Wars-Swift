@@ -175,7 +175,7 @@ extension DetailsViewController: UITableViewDataSource, UITableViewDelegate, Col
                             
                             for film in self.films {
                                 if let title = film.title {
-                                    if (!filmsString.contains(title)) {
+                                    if (!filmsString.contains(title.capitalized)) {
                                         filmsString.append(title.capitalized)
                                     }
                                 }
@@ -226,7 +226,7 @@ extension DetailsViewController: UITableViewDataSource, UITableViewDelegate, Col
                             
                             for species in self.species {
                                 if let name = species.name {
-                                    if (!speciesString.contains(name)) {
+                                    if (!speciesString.contains(name.capitalized)) {
                                         speciesString.append(name.capitalized)
                                     }
                                 }
@@ -277,7 +277,7 @@ extension DetailsViewController: UITableViewDataSource, UITableViewDelegate, Col
                             
                             for vehicle in self.vehicles {
                                 if let name = vehicle.name {
-                                    if (!vehiclesString.contains(name)) {
+                                    if (!vehiclesString.contains(name.capitalized)) {
                                         vehiclesString.append(name.capitalized)
                                     }
                                 }
@@ -328,7 +328,7 @@ extension DetailsViewController: UITableViewDataSource, UITableViewDelegate, Col
                             
                             for starship in self.starships {
                                 if let name = starship.name {
-                                    if (!starshipsString.contains(name)) {
+                                    if (!starshipsString.contains(name.capitalized)) {
                                         starshipsString.append(name.capitalized)
                                     }
                                 }

@@ -170,7 +170,7 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
                                 
                                 for resident in self.characters {
                                     if let name = resident.name {
-                                        if (!charactersString.contains(name)) {
+                                        if (!charactersString.contains(name.capitalized)) {
                                             charactersString.append(name.capitalized)
                                         }
                                     }
@@ -221,7 +221,7 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
                                 
                                 for film in self.films {
                                     if let title = film.title {
-                                        if (!filmsString.contains(title)) {
+                                        if (!filmsString.contains(title.capitalized)) {
                                             filmsString.append(title.capitalized)
                                         }
                                     }
@@ -301,7 +301,7 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
                                 
                                 for character in self.characters {
                                     if let name = character.name {
-                                        if (!charactersString.contains(name)) {
+                                        if (!charactersString.contains(name.capitalized)) {
                                             charactersString.append(name.capitalized)
                                         }
                                     }
@@ -352,7 +352,7 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
                                 
                                 for planet in self.planets {
                                     if let name = planet.name {
-                                        if (!planetsString.contains(name)) {
+                                        if (!planetsString.contains(name.capitalized)) {
                                             planetsString.append(name.capitalized)
                                         }
                                     }
@@ -403,7 +403,7 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
                                 
                                 for starship in self.starships {
                                     if let name = starship.name {
-                                        if (!starshipsString.contains(name)) {
+                                        if (!starshipsString.contains(name.capitalized)) {
                                             starshipsString.append(name.capitalized)
                                         }
                                     }
@@ -454,7 +454,7 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
                                 
                                 for vehicle in self.vehicles {
                                     if let name = vehicle.name {
-                                        if (!vehiclesString.contains(name)) {
+                                        if (!vehiclesString.contains(name.capitalized)) {
                                             vehiclesString.append(name.capitalized)
                                         }
                                     }
@@ -505,7 +505,7 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
                                 
                                 for species in self.species {
                                     if let name = species.name {
-                                        if (!speciesString.contains(name)) {
+                                        if (!speciesString.contains(name.capitalized)) {
                                             speciesString.append(name.capitalized)
                                         }
                                     }
@@ -721,16 +721,20 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
             switch indexPath.row {
                 case 0:
                     cell.lblType.text = "Model"
-                    cell.lblValue.text = vehicle.model
+                    cell.lblValue.text = vehicle.model?.capitalized
                 case 1:
                     cell.lblType.text = "Manufacturer"
-                    cell.lblValue.text = vehicle.manufacturer
+                    cell.lblValue.text = vehicle.manufacturer?.capitalized
                 case 2:
                     cell.lblType.text = "Cost (In Credits)"
-                    cell.lblValue.text = vehicle.cost_in_credits
+                    cell.lblValue.text = vehicle.cost_in_credits?.capitalized
                 case 3:
                     cell.lblType.text = "Length"
-                    cell.lblValue.text = vehicle.length
+                    if (Double(vehicle.length!) != nil)  {
+                        cell.lblValue.text = "\(Measurement(value: Double(vehicle.length!) as! Double, unit: UnitLength.meters))"
+                    } else {
+                        cell.lblValue.text = vehicle.length!.capitalized
+                    }
                 case 4:
                     cell.lblType.text = "Maximum Atmosphering Speed"
                     cell.lblValue.text = vehicle.max_atmosphering_speed
@@ -742,19 +746,120 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
                     cell.lblValue.text = vehicle.passengers
                 case 7:
                     cell.lblType.text = "Cargo Capacity"
-                    cell.lblValue.text = vehicle.cargo_capacity
+                    if (Double(vehicle.cargo_capacity!) != nil)  {
+                        cell.lblValue.text = "\(Measurement(value: Double(vehicle.cargo_capacity!) as! Double, unit: UnitMass.kilograms))"
+                    } else {
+                        cell.lblValue.text = vehicle.cargo_capacity!.capitalized
+                    }
                 case 8:
                     cell.lblType.text = "Consumables"
-                    cell.lblValue.text = vehicle.consumables
+                    cell.lblValue.text = vehicle.consumables?.capitalized
                 case 9:
                     cell.lblType.text = "Vehicle Class"
-                    cell.lblValue.text = vehicle.vehicle_class
+                    cell.lblValue.text = vehicle.vehicle_class?.capitalized
                 case 10:
+                    cell = tableView.dequeueReusableCell(withIdentifier: "DEFAULT_TABLEVIEWGENDETAILS_CELL_ID_COLLECTION-CHARACTERS") as! DetailTableViewCell
                     cell.lblType.text = "Pilots"
-                    cell.lblValue.text = "COLLECTION"
+                    
+                    if (vehicle.pilots!.count > 0) {
+                        cell.lblValue.isHidden = true
+                        
+                        if (self.characters.count == 0) {
+                            cell.activityIndicator.isHidden = false
+                            let group = DispatchGroup()
+                            
+                            for characterUrl in vehicle.pilots! {
+                                group.enter()
+                                API.getCharacterInfo(
+                                    url: characterUrl,
+                                    success: { (character) in
+                                        self.characters.append(character)
+                                        group.leave()
+                                },
+                                    failure: { (error) in print(error)})
+                            }
+                            
+                            group.notify(queue: .main) {
+                                var charactersString: [String] = []
+                                cell.activityIndicator.isHidden = true
+                                
+                                for character in self.characters {
+                                    if let name = character.name {
+                                        if (!charactersString.contains(name)) {
+                                            charactersString.append(name.capitalized)
+                                        }
+                                    }
+                                }
+                                
+                                print(charactersString)
+                                
+                                cell.stringArray = charactersString
+                                cell.bgColorForCollectionViewCell = UIColor.orange
+                                cell.bgColorForCollectionViewCellLabel = UIColor.black
+                                cell.isBackgroundClear = true
+                                
+                                cell.lblType.isHidden = false
+                                cell.collectionView.isHidden = false
+                                
+                                cell.collectionView.reloadData()
+                                tableView.reloadData()
+                            }
+                        }
+                    } else {
+                        cell.lblValue.text = "N/A"
+                }
                 case 11:
+                    cell = tableView.dequeueReusableCell(withIdentifier: "DEFAULT_TABLEVIEWGENDETAILS_CELL_ID_COLLECTION-FILMS") as! DetailTableViewCell
                     cell.lblType.text = "Films"
-                    cell.lblValue.text = "COLLECTION"
+                    
+                    if (vehicle.films!.count > 0) {
+                        cell.lblValue.isHidden = true
+                        
+                        if (self.films.count == 0) {
+                            cell.activityIndicator.isHidden = false
+                            let group = DispatchGroup()
+                            
+                            for filmUrl in vehicle.films! {
+                                group.enter()
+                                API.getFilmInfo(
+                                    url: filmUrl,
+                                    success: { (film) in
+                                        self.films.append(film)
+                                        group.leave()
+                                },
+                                    failure: { (error) in print(error)})
+                            }
+                            
+                            group.notify(queue: .main) {
+                                var filmsString: [String] = []
+                                cell.activityIndicator.isHidden = true
+                                
+                                for film in self.films {
+                                    if let title = film.title {
+                                        if (!filmsString.contains(title.capitalized)) {
+                                            filmsString.append(title.capitalized)
+                                        }
+                                    }
+                                }
+                                
+                                print(filmsString)
+                                
+                                cell.stringArray = filmsString
+                                cell.bgColorForCollectionViewCell = UIColor.brown
+                                cell.bgColorForCollectionViewCellLabel = UIColor.black
+                                cell.isBackgroundClear = true
+                                
+                                cell.lblType.isHidden = false
+                                cell.collectionView.isHidden = false
+                                
+                                cell.collectionView.reloadData()
+                                tableView.reloadData()
+                            }
+                        }
+                    } else {
+                        cell.lblType.text = "Films"
+                        cell.lblValue.text = "N/A"
+                }
                 default:
                     cell.lblType.text = ""
                     cell.lblValue.text = ""
@@ -769,7 +874,7 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
                     cell.lblValue.text = starship.manufacturer
                 case 2:
                     cell.lblType.text = "Cost (In Credits)"
-                    cell.lblValue.text = starship.cost_in_credits
+                    cell.lblValue.text = starship.cost_in_credits?.capitalized
                 case 3:
                     cell.lblType.text = "Length"
                     cell.lblValue.text = starship.length
@@ -787,7 +892,7 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
                     cell.lblValue.text = starship.cargo_capacity
                 case 8:
                     cell.lblType.text = "Consumables"
-                    cell.lblValue.text = starship.consumables
+                    cell.lblValue.text = starship.consumables?.capitalized
                 case 9:
                     cell.lblType.text = "Hyperdrive Rating"
                     cell.lblValue.text = starship.hyperdrive_rating
