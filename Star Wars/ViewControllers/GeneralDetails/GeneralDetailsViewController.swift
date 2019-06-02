@@ -727,7 +727,11 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
                     cell.lblValue.text = vehicle.manufacturer?.capitalized
                 case 2:
                     cell.lblType.text = "Cost (In Credits)"
-                    cell.lblValue.text = vehicle.cost_in_credits?.capitalized
+                    if (Double(vehicle.cost_in_credits!) != nil)  {
+                        cell.lblValue.text = formatInt(inputNumber: vehicle.cost_in_credits!)
+                    } else {
+                        cell.lblValue.text = vehicle.cost_in_credits!.capitalized
+                    }
                 case 3:
                     cell.lblType.text = "Length"
                     if (Double(vehicle.length!) != nil)  {
@@ -807,7 +811,7 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
                         }
                     } else {
                         cell.lblValue.text = "N/A"
-                }
+                    }
                 case 11:
                     cell = tableView.dequeueReusableCell(withIdentifier: "DEFAULT_TABLEVIEWGENDETAILS_CELL_ID_COLLECTION-FILMS") as! DetailTableViewCell
                     cell.lblType.text = "Films"
@@ -859,7 +863,7 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
                     } else {
                         cell.lblType.text = "Films"
                         cell.lblValue.text = "N/A"
-                }
+                    }
                 default:
                     cell.lblType.text = ""
                     cell.lblValue.text = ""
@@ -868,16 +872,24 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
             switch indexPath.row {
                 case 0:
                     cell.lblType.text = "Model"
-                    cell.lblValue.text = starship.model
+                    cell.lblValue.text = starship.model?.capitalized
                 case 1:
                     cell.lblType.text = "Manufacturer"
-                    cell.lblValue.text = starship.manufacturer
+                    cell.lblValue.text = starship.manufacturer?.capitalized
                 case 2:
                     cell.lblType.text = "Cost (In Credits)"
-                    cell.lblValue.text = starship.cost_in_credits?.capitalized
+                    if (Double(starship.cost_in_credits!) != nil)  {
+                        cell.lblValue.text = formatInt(inputNumber: starship.cost_in_credits!)
+                    } else {
+                        cell.lblValue.text = starship.cost_in_credits!.capitalized
+                    }
                 case 3:
                     cell.lblType.text = "Length"
-                    cell.lblValue.text = starship.length
+                    if (Double(starship.length!) != nil)  {
+                        cell.lblValue.text = "\(Measurement(value: Double(starship.length!) as! Double, unit: UnitLength.meters))"
+                    } else {
+                        cell.lblValue.text = starship.length!.capitalized
+                    }
                 case 4:
                     cell.lblType.text = "Maximum Atmosphering Speed"
                     cell.lblValue.text = starship.max_atmosphering_speed
@@ -889,7 +901,11 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
                     cell.lblValue.text = starship.passengers
                 case 7:
                     cell.lblType.text = "Cargo Capacity"
-                    cell.lblValue.text = starship.cargo_capacity
+                    if (Double(starship.cargo_capacity!) != nil)  {
+                        cell.lblValue.text = "\(Measurement(value: Double(starship.cargo_capacity!) as! Double, unit: UnitMass.kilograms))"
+                    } else {
+                        cell.lblValue.text = starship.cargo_capacity!.capitalized
+                    }
                 case 8:
                     cell.lblType.text = "Consumables"
                     cell.lblValue.text = starship.consumables?.capitalized
@@ -900,14 +916,111 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
                     cell.lblType.text = "Megalight Per Hour"
                     cell.lblValue.text = starship.MGLT
                 case 11:
-                    cell.lblType.text = "Starships Class"
-                    cell.lblValue.text = starship.starship_class
+                    cell.lblType.text = "Starship Class"
+                    cell.lblValue.text = starship.starship_class?.capitalized
                 case 12:
+                    cell = tableView.dequeueReusableCell(withIdentifier: "DEFAULT_TABLEVIEWGENDETAILS_CELL_ID_COLLECTION-CHARACTERS") as! DetailTableViewCell
                     cell.lblType.text = "Pilots"
-                    cell.lblValue.text = "COLLECTION"
+                
+                    if (starship.pilots!.count > 0) {
+                        cell.lblValue.isHidden = true
+                        
+                        if (self.characters.count == 0) {
+                            cell.activityIndicator.isHidden = false
+                            let group = DispatchGroup()
+                            
+                            for characterUrl in starship.pilots! {
+                                group.enter()
+                                API.getCharacterInfo(
+                                    url: characterUrl,
+                                    success: { (character) in
+                                        self.characters.append(character)
+                                        group.leave()
+                                },
+                                    failure: { (error) in print(error)})
+                            }
+                            
+                            group.notify(queue: .main) {
+                                var charactersString: [String] = []
+                                cell.activityIndicator.isHidden = true
+                                
+                                for character in self.characters {
+                                    if let name = character.name {
+                                        if (!charactersString.contains(name)) {
+                                            charactersString.append(name.capitalized)
+                                        }
+                                    }
+                                }
+                                
+                                print(charactersString)
+                                
+                                cell.stringArray = charactersString
+                                cell.bgColorForCollectionViewCell = UIColor.orange
+                                cell.bgColorForCollectionViewCellLabel = UIColor.black
+                                cell.isBackgroundClear = true
+                                
+                                cell.lblType.isHidden = false
+                                cell.collectionView.isHidden = false
+                                
+                                cell.collectionView.reloadData()
+                                tableView.reloadData()
+                            }
+                        }
+                    } else {
+                        cell.lblValue.text = "N/A"
+                    }
                 case 13:
+                    cell = tableView.dequeueReusableCell(withIdentifier: "DEFAULT_TABLEVIEWGENDETAILS_CELL_ID_COLLECTION-FILMS") as! DetailTableViewCell
                     cell.lblType.text = "Films"
-                    cell.lblValue.text = "COLLECTION"
+                
+                    if (starship.films!.count > 0) {
+                        cell.lblValue.isHidden = true
+                        
+                        if (self.films.count == 0) {
+                            cell.activityIndicator.isHidden = false
+                            let group = DispatchGroup()
+                            
+                            for filmUrl in starship.films! {
+                                group.enter()
+                                API.getFilmInfo(
+                                    url: filmUrl,
+                                    success: { (film) in
+                                        self.films.append(film)
+                                        group.leave()
+                                },
+                                    failure: { (error) in print(error)})
+                            }
+                            
+                            group.notify(queue: .main) {
+                                var filmsString: [String] = []
+                                cell.activityIndicator.isHidden = true
+                                
+                                for film in self.films {
+                                    if let title = film.title {
+                                        if (!filmsString.contains(title.capitalized)) {
+                                            filmsString.append(title.capitalized)
+                                        }
+                                    }
+                                }
+                                
+                                print(filmsString)
+                                
+                                cell.stringArray = filmsString
+                                cell.bgColorForCollectionViewCell = UIColor.brown
+                                cell.bgColorForCollectionViewCellLabel = UIColor.black
+                                cell.isBackgroundClear = true
+                                
+                                cell.lblType.isHidden = false
+                                cell.collectionView.isHidden = false
+                                
+                                cell.collectionView.reloadData()
+                                tableView.reloadData()
+                            }
+                        }
+                    } else {
+                        cell.lblType.text = "Films"
+                        cell.lblValue.text = "N/A"
+                    }
                 default:
                     cell.lblType.text = ""
                     cell.lblValue.text = ""
