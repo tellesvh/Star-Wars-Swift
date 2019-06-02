@@ -13,8 +13,12 @@ class GeneralDetailsViewController: UIViewController {
     var object: AnyObject?
     @IBOutlet weak var tableViewGeneralDetails: UITableView!
     
-    var residents: [Character] = []
+    var characters: [Character] = []
     var films: [Film] = []
+    var planets: [Homeworld] = []
+    var starships: [Starship] = []
+    var vehicles: [Vehicle] = []
+    var species: [Species] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +41,13 @@ class GeneralDetailsViewController: UIViewController {
         }
         
         self.tableViewGeneralDetails.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
-        self.tableViewGeneralDetails.register(UINib.init(nibName: "DetailTableViewCell", bundle: nil), forCellReuseIdentifier: "DEFAULT_TABLEVIEWGENDETAILS_CELL_ID")
+        self.tableViewGeneralDetails.register(UINib.init(nibName: "DetailTableViewCell", bundle: nil), forCellReuseIdentifier: "DEFAULT_TABLEVIEWGENDETAILS_CELL_ID_NORMAL")
+        self.tableViewGeneralDetails.register(UINib.init(nibName: "DetailTableViewCell", bundle: nil), forCellReuseIdentifier: "DEFAULT_TABLEVIEWGENDETAILS_CELL_ID_COLLECTION-FILMS")
+        self.tableViewGeneralDetails.register(UINib.init(nibName: "DetailTableViewCell", bundle: nil), forCellReuseIdentifier: "DEFAULT_TABLEVIEWGENDETAILS_CELL_ID_COLLECTION-CHARACTERS")
+        self.tableViewGeneralDetails.register(UINib.init(nibName: "DetailTableViewCell", bundle: nil), forCellReuseIdentifier: "DEFAULT_TABLEVIEWGENDETAILS_CELL_ID_COLLECTION-PLANETS")
+        self.tableViewGeneralDetails.register(UINib.init(nibName: "DetailTableViewCell", bundle: nil), forCellReuseIdentifier: "DEFAULT_TABLEVIEWGENDETAILS_CELL_ID_COLLECTION-STARSHIPS")
+        self.tableViewGeneralDetails.register(UINib.init(nibName: "DetailTableViewCell", bundle: nil), forCellReuseIdentifier: "DEFAULT_TABLEVIEWGENDETAILS_CELL_ID_COLLECTION-VEHICLES")
+        self.tableViewGeneralDetails.register(UINib.init(nibName: "DetailTableViewCell", bundle: nil), forCellReuseIdentifier: "DEFAULT_TABLEVIEWGENDETAILS_CELL_ID_COLLECTION-SPECIES")
         
     }
 
@@ -85,7 +95,7 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "DEFAULT_TABLEVIEWGENDETAILS_CELL_ID") as! DetailTableViewCell
+        var cell = tableView.dequeueReusableCell(withIdentifier: "DEFAULT_TABLEVIEWGENDETAILS_CELL_ID_NORMAL") as! DetailTableViewCell
         
         if let homeworld = object as? Homeworld {
             switch indexPath.row {
@@ -134,11 +144,12 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
                         cell.lblValue.text = homeworld.population!.capitalized
                     }
                 case 8:
+                    cell = tableView.dequeueReusableCell(withIdentifier: "DEFAULT_TABLEVIEWGENDETAILS_CELL_ID_COLLECTION-CHARACTERS") as! DetailTableViewCell
                     if (homeworld.residents!.count > 0) {
                         cell.lblType.text = "Residents"
                         cell.lblValue.isHidden = true
                     
-                        if (self.residents.count == 0) {
+                        if (self.characters.count == 0) {
                             cell.activityIndicator.isHidden = false
                             let group = DispatchGroup()
                             
@@ -147,7 +158,7 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
                                 API.getCharacterInfo(
                                     url: residentUrl,
                                     success: { (character) in
-                                        self.residents.append(character)
+                                        self.characters.append(character)
                                         group.leave()
                                 },
                                     failure: { (error) in print(error)})
@@ -157,7 +168,7 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
                                 var charactersString: [String] = []
                                 cell.activityIndicator.isHidden = true
                                 
-                                for resident in self.residents {
+                                for resident in self.characters {
                                     if let name = resident.name {
                                         if (!charactersString.contains(name)) {
                                             charactersString.append(name)
@@ -183,6 +194,7 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
                         cell.lblValue.text = "N/A"
                     }
                 case 9:
+                    cell = tableView.dequeueReusableCell(withIdentifier: "DEFAULT_TABLEVIEWGENDETAILS_CELL_ID_COLLECTION-FILMS") as! DetailTableViewCell
                     if (homeworld.films!.count > 0) {
                         cell.lblType.text = "Films"
                         cell.lblValue.isHidden = true
@@ -251,22 +263,264 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
                     cell.lblValue.text = film.producer
                 case 4:
                     cell.lblType.text = "Release Date"
-                    cell.lblValue.text = film.release_date
+                    
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "YYYY-MM-dd"
+                    if let date = dateFormatter.date(from: film.release_date!) {
+                        dateFormatter.dateFormat = "MMM dd, yyyy"
+                        dateFormatter.locale =  NSLocale(localeIdentifier: "en_US_POSIX") as Locale
+                        cell.lblValue.text = dateFormatter.string(from: date)
+                    }
                 case 5:
+                    cell = tableView.dequeueReusableCell(withIdentifier: "DEFAULT_TABLEVIEWGENDETAILS_CELL_ID_COLLECTION-CHARACTERS") as! DetailTableViewCell
                     cell.lblType.text = "Characters"
-                    cell.lblValue.text = "COLLECTION"
+                    
+                    if (film.characters!.count > 0) {
+                        cell.lblValue.isHidden = true
+                        
+                        if (self.characters.count == 0) {
+                            cell.activityIndicator.isHidden = false
+                            let group = DispatchGroup()
+                            
+                            for characterUrl in film.characters! {
+                                group.enter()
+                                API.getCharacterInfo(
+                                    url: characterUrl,
+                                    success: { (character) in
+                                        self.characters.append(character)
+                                        group.leave()
+                                },
+                                    failure: { (error) in print(error)})
+                            }
+                            
+                            group.notify(queue: .main) {
+                                var charactersString: [String] = []
+                                cell.activityIndicator.isHidden = true
+                                
+                                for character in self.characters {
+                                    if let name = character.name {
+                                        if (!charactersString.contains(name)) {
+                                            charactersString.append(name)
+                                        }
+                                    }
+                                }
+                                
+                                print(charactersString)
+                                
+                                cell.stringArray = charactersString
+                                cell.bgColorForCollectionViewCell = UIColor.orange
+                                cell.bgColorForCollectionViewCellLabel = UIColor.white
+                                
+                                cell.lblType.isHidden = false
+                                cell.collectionView.isHidden = false
+                                
+                                cell.collectionView.reloadData()
+                                tableView.reloadData()
+                            }
+                        }
+                    } else {
+                        cell.lblValue.text = "N/A"
+                    }
                 case 6:
+                    cell = tableView.dequeueReusableCell(withIdentifier: "DEFAULT_TABLEVIEWGENDETAILS_CELL_ID_COLLECTION-PLANETS") as! DetailTableViewCell
                     cell.lblType.text = "Planets"
-                    cell.lblValue.text = "COLLECTION"
+                
+                    if (film.planets!.count > 0) {
+                        cell.lblValue.isHidden = true
+                        
+                        if (self.planets.count == 0) {
+                            cell.activityIndicator.isHidden = false
+                            let group = DispatchGroup()
+                            
+                            for planetUrl in film.planets! {
+                                group.enter()
+                                API.getHomeworldInfo(
+                                    url: planetUrl,
+                                    success: { (planet) in
+                                        self.planets.append(planet)
+                                        group.leave()
+                                },
+                                    failure: { (error) in print(error)})
+                            }
+                            
+                            group.notify(queue: .main) {
+                                var planetsString: [String] = []
+                                cell.activityIndicator.isHidden = true
+                                
+                                for planet in self.planets {
+                                    if let name = planet.name {
+                                        if (!planetsString.contains(name)) {
+                                            planetsString.append(name)
+                                        }
+                                    }
+                                }
+                                
+                                print(planetsString)
+                                
+                                cell.stringArray = planetsString
+                                cell.bgColorForCollectionViewCell = UIColor(red: 0, green: 140/255, blue: 25/255, alpha: 1)
+                                cell.bgColorForCollectionViewCellLabel = UIColor.white
+                                
+                                cell.lblType.isHidden = false
+                                cell.collectionView.isHidden = false
+                                
+                                cell.collectionView.reloadData()
+                                tableView.reloadData()
+                            }
+                        }
+                    } else {
+                        cell.lblValue.text = "N/A"
+                    }
                 case 7:
+                    cell = tableView.dequeueReusableCell(withIdentifier: "DEFAULT_TABLEVIEWGENDETAILS_CELL_ID_COLLECTION-STARSHIPS") as! DetailTableViewCell
                     cell.lblType.text = "Starships"
-                    cell.lblValue.text = "COLLECTION"
+                
+                    if (film.starships!.count > 0) {
+                        cell.lblValue.isHidden = true
+                        
+                        if (self.starships.count == 0) {
+                            cell.activityIndicator.isHidden = false
+                            let group = DispatchGroup()
+                            
+                            for starshipUrl in film.starships! {
+                                group.enter()
+                                API.getStarshipInfo(
+                                    url: starshipUrl,
+                                    success: { (starship) in
+                                        self.starships.append(starship)
+                                        group.leave()
+                                },
+                                    failure: { (error) in print(error)})
+                            }
+                            
+                            group.notify(queue: .main) {
+                                var starshipsString: [String] = []
+                                cell.activityIndicator.isHidden = true
+                                
+                                for starship in self.starships {
+                                    if let name = starship.name {
+                                        if (!starshipsString.contains(name)) {
+                                            starshipsString.append(name)
+                                        }
+                                    }
+                                }
+                                
+                                print(starshipsString)
+                                
+                                cell.stringArray = starshipsString
+                                cell.bgColorForCollectionViewCell = UIColor.blue
+                                cell.bgColorForCollectionViewCellLabel = UIColor.white
+                                
+                                cell.lblType.isHidden = false
+                                cell.collectionView.isHidden = false
+                                
+                                cell.collectionView.reloadData()
+                                tableView.reloadData()
+                            }
+                        }
+                    } else {
+                        cell.lblValue.text = "N/A"
+                    }
                 case 8:
+                    cell = tableView.dequeueReusableCell(withIdentifier: "DEFAULT_TABLEVIEWGENDETAILS_CELL_ID_COLLECTION-VEHICLES") as! DetailTableViewCell
                     cell.lblType.text = "Vehicles"
-                    cell.lblValue.text = "COLLECTION"
+                
+                    if (film.vehicles!.count > 0) {
+                        cell.lblValue.isHidden = true
+                        
+                        if (self.vehicles.count == 0) {
+                            cell.activityIndicator.isHidden = false
+                            let group = DispatchGroup()
+                            
+                            for vehicleUrl in film.vehicles! {
+                                group.enter()
+                                API.getVehicleInfo(
+                                    url: vehicleUrl,
+                                    success: { (vehicle) in
+                                        self.vehicles.append(vehicle)
+                                        group.leave()
+                                },
+                                    failure: { (error) in print(error)})
+                            }
+                            
+                            group.notify(queue: .main) {
+                                var vehiclesString: [String] = []
+                                cell.activityIndicator.isHidden = true
+                                
+                                for vehicle in self.vehicles {
+                                    if let name = vehicle.name {
+                                        if (!vehiclesString.contains(name)) {
+                                            vehiclesString.append(name)
+                                        }
+                                    }
+                                }
+                                
+                                print(vehiclesString)
+                                
+                                cell.stringArray = vehiclesString
+                                cell.bgColorForCollectionViewCell = UIColor.red
+                                cell.bgColorForCollectionViewCellLabel = UIColor.white
+                                
+                                cell.lblType.isHidden = false
+                                cell.collectionView.isHidden = false
+                                
+                                cell.collectionView.reloadData()
+                                tableView.reloadData()
+                            }
+                        }
+                    } else {
+                        cell.lblValue.text = "N/A"
+                    }
                 case 9:
+                    cell = tableView.dequeueReusableCell(withIdentifier: "DEFAULT_TABLEVIEWGENDETAILS_CELL_ID_COLLECTION-SPECIES") as! DetailTableViewCell
                     cell.lblType.text = "Species"
-                    cell.lblValue.text = "COLLECTION"
+                
+                    if (film.species!.count > 0) {
+                        cell.lblValue.isHidden = true
+                        
+                        if (self.species.count == 0) {
+                            cell.activityIndicator.isHidden = false
+                            let group = DispatchGroup()
+                            
+                            for speciesUrl in film.species! {
+                                group.enter()
+                                API.getSpeciesInfo(
+                                    url: speciesUrl,
+                                    success: { (species) in
+                                        self.species.append(species)
+                                        group.leave()
+                                },
+                                    failure: { (error) in print(error)})
+                            }
+                            
+                            group.notify(queue: .main) {
+                                var speciesString: [String] = []
+                                cell.activityIndicator.isHidden = true
+                                
+                                for species in self.species {
+                                    if let name = species.name {
+                                        if (!speciesString.contains(name)) {
+                                            speciesString.append(name)
+                                        }
+                                    }
+                                }
+                                
+                                print(speciesString)
+                                
+                                cell.stringArray = speciesString
+                                cell.bgColorForCollectionViewCell = UIColor.purple
+                                cell.bgColorForCollectionViewCellLabel = UIColor.white
+                                
+                                cell.lblType.isHidden = false
+                                cell.collectionView.isHidden = false
+                                
+                                cell.collectionView.reloadData()
+                                tableView.reloadData()
+                            }
+                        }
+                    } else {
+                        cell.lblValue.text = "N/A"
+                    }
                 default:
                     cell.lblType.text = ""
                     cell.lblValue.text = ""
