@@ -6,5 +6,7 @@ target 'Star Wars' do
   use_frameworks!
 
   pod 'Alamofire', '~> 4.8.2'
+  pod 'FontAwesomeKit/FontAwesome'
+  pod 'RealmSwift'
 
 end

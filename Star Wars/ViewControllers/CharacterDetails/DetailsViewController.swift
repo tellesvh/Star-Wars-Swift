@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import FontAwesomeKit
+import RealmSwift
 
 class DetailsViewController: UIViewController {
     
@@ -18,6 +20,9 @@ class DetailsViewController: UIViewController {
     var vehicles: [Vehicle] = []
     var starships: [Starship] = []
     var itemClicked: AnyObject?
+    var isFavorite: Bool = false
+    
+    let realm = try! Realm()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,9 +31,84 @@ class DetailsViewController: UIViewController {
         ]
         navigationItem.title = character!.name
         self.navigationController?.navigationBar.topItem?.title = "Back";
+        self.navigationController?.navigationBar.tintColor = UIColor(
+            red: 254/255, green: 196/255, blue: 45/255, alpha: 1
+        );
+        
+        isFavorite = objectExistOnRealm(name: character!.name!)
+        updateFavoriteButton(add: false)
         
         self.tableViewDetails.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
         self.tableViewDetails.register(UINib.init(nibName: "DetailTableViewCell", bundle: nil), forCellReuseIdentifier: "DEFAULT_TABLEVIEWDETAILS_CELL_ID")
+    }
+    
+    func objectExistOnRealm (name: String) -> Bool {
+        if (realm.objects(CharacterRealm.self).filter("name = '" + character!.name! + "'").count > 0 ) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func updateFavoriteButton(add: Bool) {
+        print(isFavorite)
+        
+        var favAwesome: FAKFontAwesome
+        
+        if isFavorite {
+            favAwesome = FAKFontAwesome.starIcon(withSize: 30.0) as FAKFontAwesome
+            
+            let character = CharacterRealm()
+            character.name = self.character!.name!
+            character.height = self.character!.height!
+            character.mass = self.character!.mass!
+            character.hair_color = self.character!.hair_color!
+            character.skin_color = self.character!.skin_color!
+            character.eye_color = self.character!.eye_color!
+            character.birth_year = self.character!.birth_year!
+            character.gender = self.character!.gender!
+            character.homeworld = self.character!.homeworld!
+            for film in self.character!.films! {
+                character.films.append(film)
+            }
+            for species in self.character!.species! {
+                character.species.append(species)
+            }
+            for vehicle in self.character!.vehicles! {
+                character.vehicles.append(vehicle)
+            }
+            for starship in self.character!.starships! {
+                character.starships.append(starship)
+            }
+            
+            if (add) {
+                try! realm.write {
+                    realm.add(character)
+                }
+            }
+        } else {
+            favAwesome = FAKFontAwesome.starOIcon(withSize: 30.0) as FAKFontAwesome
+            
+            try! realm.write {
+                realm.delete(realm.objects(CharacterRealm.self).filter("name = '" + character!.name! + "'"))
+            }
+        }
+        
+        favAwesome.addAttribute(NSAttributedString.Key.foregroundColor.rawValue, value: UIColor.white)
+        let favBtn = UIButton(type: UIButton.ButtonType.system) as UIButton
+        favBtn.frame = CGRect(x: 0,y: 0,width: 30,height: 30)
+        favBtn.setImage(favAwesome.image(with: CGSize(width: 30, height: 30)), for: .normal)
+        favBtn.addTarget(self, action: #selector(self.didTapFavoriteButton(_:)), for: UIControl.Event.touchUpInside)
+        favBtn.tintColor = UIColor(
+            red: 254/255, green: 196/255, blue: 45/255, alpha: 1
+        );
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: favBtn)
+    }
+    
+    @objc func didTapFavoriteButton(_ button:UIBarButtonItem!) {
+        isFavorite = !isFavorite
+        updateFavoriteButton(add: true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {

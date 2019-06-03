@@ -1,16 +1,32 @@
 PODS:
   - Alamofire (4.8.2)
+  - FontAwesomeKit/Core (2.2.1)
+  - FontAwesomeKit/FontAwesome (2.2.1):
+    - FontAwesomeKit/Core
+  - Realm (3.16.0):
+    - Realm/Headers (= 3.16.0)
+  - Realm/Headers (3.16.0)
+  - RealmSwift (3.16.0):
+    - Realm (= 3.16.0)
 
 DEPENDENCIES:
   - Alamofire (~> 4.8.2)
+  - FontAwesomeKit/FontAwesome
+  - RealmSwift
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
+    - FontAwesomeKit
+    - Realm
+    - RealmSwift
 
 SPEC CHECKSUMS:
   Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
+  FontAwesomeKit: 3614979b3dbb0ec3f7fac1bd760b91f66c31db67
+  Realm: 5ca1b8c472dfc532cd0ba0bfe2ce49f97130158f
+  RealmSwift: 2ee401dbcc188706261921326146f5a539d4d4a7
 
-PODFILE CHECKSUM: d8451f0997a686716dd94e7e33182fad8e1ed4dc
+PODFILE CHECKSUM: 1715d9ed96bb497938a720bd54f6757bc67dc9f4
 
 COCOAPODS: 1.5.3

@@ -14,15 +14,32 @@
 
 import Foundation
 import Alamofire
+import RealmSwift
+
+class CharacterRealm: Object {
+    @objc dynamic var name = ""
+    @objc dynamic var height = ""
+    @objc dynamic var mass = ""
+    @objc dynamic var hair_color = ""
+    @objc dynamic var skin_color = ""
+    @objc dynamic var eye_color = ""
+    @objc dynamic var birth_year = ""
+    @objc dynamic var gender = ""
+    @objc dynamic var homeworld = ""
+    let films = List<String>()
+    let species = List<String>()
+    let vehicles = List<String>()
+    let starships = List<String>()
+}
 
 // MARK: - Character
 class Character: Codable {
-    let name, height, mass, hair_color: String?
-    let skin_color, eye_color, birth_year, gender: String?
-    let homeworld: String?
-    let films, species, vehicles, starships: [String]?
-    let created, edited: String?
-    let url: String?
+    var name, height, mass, hair_color: String?
+    var skin_color, eye_color, birth_year, gender: String?
+    var homeworld: String?
+    var films, species, vehicles, starships: [String]?
+    var created, edited: String?
+    var url: String?
     
     enum CodingKeys: String, CodingKey {
         case name, height, mass
