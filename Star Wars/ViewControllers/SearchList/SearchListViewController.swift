@@ -38,10 +38,12 @@ class SearchListViewController: UIViewController, UISearchBarDelegate {
     }
     
     func getCharactersByQuery() {
+        print("sjh")
         if let query = searchBar.text {
             API.getCharactersByQuery(
                 query: query,
                 success:{ (results) in
+                    print(results.results)
                     if let finalResults = results.results {
                         self.characterResults = finalResults
                         if results.next != nil {

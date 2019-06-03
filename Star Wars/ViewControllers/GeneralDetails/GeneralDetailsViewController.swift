@@ -170,8 +170,8 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
                                 
                                 for resident in self.characters {
                                     if let name = resident.name {
-                                        if (!charactersString.contains(name.capitalized)) {
-                                            charactersString.append(name.capitalized)
+                                        if (!charactersString.contains(name)) {
+                                            charactersString.append(name)
                                         }
                                     }
                                 }
@@ -301,8 +301,8 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
                                 
                                 for character in self.characters {
                                     if let name = character.name {
-                                        if (!charactersString.contains(name.capitalized)) {
-                                            charactersString.append(name.capitalized)
+                                        if (!charactersString.contains(name)) {
+                                            charactersString.append(name)
                                         }
                                     }
                                 }
@@ -567,44 +567,48 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
                     cell = tableView.dequeueReusableCell(withIdentifier: "DEFAULT_TABLEVIEWGENDETAILS_CELL_ID_COLLECTION-PLANETS") as! DetailTableViewCell
                     cell.lblType.text = "Homeworld"
                     
-                    if (species.homeworld!.contains("https://")) {
-                        cell.lblValue.isHidden = true
-                        
-                        if (self.planets.count == 0) {
-                            cell.activityIndicator.isHidden = false
+                    if (species.homeworld != nil) {
+                        if (species.homeworld!.contains("https://")) {
+                            cell.lblValue.isHidden = true
                             
-                            API.getHomeworldInfo(
-                                url: species.homeworld!,
-                                success: { (planet) in
-                                    self.planets.append(planet)
-                                    var planetsString: [String] = []
-                                    cell.activityIndicator.isHidden = true
-                                    
-                                    for planet in self.planets {
-                                        if let name = planet.name {
-                                            if (!planetsString.contains(name)) {
-                                                planetsString.append(name.capitalized)
+                            if (self.planets.count == 0) {
+                                cell.activityIndicator.isHidden = false
+                                
+                                API.getHomeworldInfo(
+                                    url: species.homeworld!,
+                                    success: { (planet) in
+                                        self.planets.append(planet)
+                                        var planetsString: [String] = []
+                                        cell.activityIndicator.isHidden = true
+                                        
+                                        for planet in self.planets {
+                                            if let name = planet.name {
+                                                if (!planetsString.contains(name)) {
+                                                    planetsString.append(name.capitalized)
+                                                }
                                             }
                                         }
-                                    }
-                                    
-                                    print(planetsString)
-                                    
-                                    cell.stringArray = planetsString
-                                    cell.bgColorForCollectionViewCell = UIColor(red: 0, green: 140/255, blue: 25/255, alpha: 1)
-                                    cell.bgColorForCollectionViewCellLabel = UIColor.black
-                                    cell.isBackgroundClear = true
-                                    
-                                    cell.lblType.isHidden = false
-                                    cell.collectionView.isHidden = false
-                                    
-                                    cell.collectionView.reloadData()
-                                    tableView.reloadData()
-                            },
-                                failure: { (error) in print(error)})
+                                        
+                                        print(planetsString)
+                                        
+                                        cell.stringArray = planetsString
+                                        cell.bgColorForCollectionViewCell = UIColor(red: 0, green: 140/255, blue: 25/255, alpha: 1)
+                                        cell.bgColorForCollectionViewCellLabel = UIColor.black
+                                        cell.isBackgroundClear = true
+                                        
+                                        cell.lblType.isHidden = false
+                                        cell.collectionView.isHidden = false
+                                        
+                                        cell.collectionView.reloadData()
+                                        tableView.reloadData()
+                                },
+                                    failure: { (error) in print(error)})
+                            }
+                        } else {
+                            cell.lblValue.text = species.homeworld!.capitalized
                         }
                     } else {
-                        cell.lblValue.text = species.homeworld!.capitalized
+                        cell.lblValue.text = "N/A"
                     }
                 case 8:
                     cell.lblType.text = "Language"
@@ -638,7 +642,7 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
                                 for character in self.characters {
                                     if let name = character.name {
                                         if (!charactersString.contains(name)) {
-                                            charactersString.append(name.capitalized)
+                                            charactersString.append(name)
                                         }
                                     }
                                 }
@@ -790,7 +794,7 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
                                 for character in self.characters {
                                     if let name = character.name {
                                         if (!charactersString.contains(name)) {
-                                            charactersString.append(name.capitalized)
+                                            charactersString.append(name)
                                         }
                                     }
                                 }
@@ -947,7 +951,7 @@ extension GeneralDetailsViewController: UITableViewDataSource, UITableViewDelega
                                 for character in self.characters {
                                     if let name = character.name {
                                         if (!charactersString.contains(name)) {
-                                            charactersString.append(name.capitalized)
+                                            charactersString.append(name)
                                         }
                                     }
                                 }

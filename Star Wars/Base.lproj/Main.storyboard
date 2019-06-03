@@ -88,6 +88,7 @@
                     <navigationItem key="navigationItem" id="g5y-mY-96L"/>
                     <connections>
                         <outlet property="collectionViewFavorites" destination="j8L-JE-MJu" id="Hcy-XK-Lgd"/>
+                        <outlet property="lblFavorites" destination="aww-sa-cec" id="wz7-gc-Mzq"/>
                         <outlet property="searchBarMain" destination="XkV-Qg-vuv" id="lBh-g5-xhh"/>
                         <outlet property="viewLogoSearchBar" destination="CHy-sP-pt5" id="pdq-fK-VOx"/>
                         <segue destination="Qdy-ts-2H5" kind="show" identifier="MainToResults" id="j2L-fr-q2m"/>

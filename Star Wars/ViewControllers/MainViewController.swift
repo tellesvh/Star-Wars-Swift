@@ -13,6 +13,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UICollectionVie
     
     @IBOutlet weak var searchBarMain: UISearchBar!
     @IBOutlet weak var viewLogoSearchBar: UIView!
+        @IBOutlet weak var lblFavorites: UILabel!
     @IBOutlet weak var collectionViewFavorites: UICollectionView!
     var itemClicked: Character?
     var favorites: [Character] = []
@@ -86,8 +87,15 @@ class MainViewController: UIViewController, UISearchBarDelegate, UICollectionVie
             self.favorites.append(character)
         }
         
-        collectionViewFavorites.reloadData()
+        if (self.favorites.count > 0) {
+            lblFavorites.text = "Favorites"
+            lblFavorites.textAlignment = .left
+        } else {
+            lblFavorites.text = "There are no Favorites."
+            lblFavorites.textAlignment = .center
+        }
         
+        collectionViewFavorites.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
